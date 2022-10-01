@@ -38,6 +38,12 @@ const Login: React.FC<LoginProps> = () => {
           border: "1 px solid",
           borderColor: "blue.500",
         }}
+        _focus={{
+          outline: "none",
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
         bg="gray.50"
       />
       <Input
@@ -52,6 +58,12 @@ const Login: React.FC<LoginProps> = () => {
         _hover={{
           bg: "white",
           border: "1 px solid",
+          borderColor: "blue.500",
+        }}
+        _focus={{
+          outline: "none",
+          bg: "white",
+          border: "1px solid",
           borderColor: "blue.500",
         }}
         bg="gray.50"
