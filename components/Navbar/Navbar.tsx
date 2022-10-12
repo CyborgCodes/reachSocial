@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
       >
         <Image src="" height="30px" />
       </Flex>
-      <Directory />
+      {user && <Directory />}
       <SearchInput user={user} />
       <RightContent user={user} />
     </Flex>

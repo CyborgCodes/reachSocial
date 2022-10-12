@@ -27,6 +27,7 @@ const SignUp: React.FC = () => {
       setError("Password does not match");
       return;
     }
+
     //password match
     createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
   };
