@@ -1,5 +1,4 @@
 import {
-  useDisclosure,
   Button,
   Modal,
   ModalOverlay,
@@ -17,9 +16,12 @@ import {
   Flex,
   Icon,
 } from "@chakra-ui/react";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { BsFillEyeFill, BsFillPersonFill } from "react-icons/bs";
 import { HiLockClosed } from "react-icons/hi";
+import { auth, firestore } from "../firebase/clientApp";
 
 type CreateCommunityProps = {
   open: boolean;
@@ -30,10 +32,12 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
   open,
   handleClose,
 }) => {
+  const [user] = useAuthState(auth);
   const [communityName, setCommunityName] = useState("");
   const [charsRemaining, setCharsRemaining] = useState(21);
   const [communityType, setCommunityType] = useState("public");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 21) return;
@@ -49,7 +53,43 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
     setCommunityType(event.target.name);
   };
 
-  const handleCreateCommunity = async () => {};
+  const handleCreateCommunity = async () => {
+    if (error) setError("");
+    //Valodate community
+    const format = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    if (format.test(communityName) || communityName.length < 3) {
+      setError(
+        "Community names must be between 3-21 characters, and can only contain letters, numbers, or underscores"
+      );
+      return;
+    }
+    setLoading(true);
+
+    try {
+      //Create the community document in firestore
+      //Check that name is not taken
+      // If valid name, create community
+      //Check if community exists in db
+      const communityDocRef = doc(firestore, "communities", communityName);
+      const communityDoc = await getDoc(communityDocRef);
+
+      if (communityDoc.exists()) {
+        throw new Error(`Sorry, c/${communityName} is taken. Try another.`);
+      }
+      //Create community
+      await setDoc(communityDocRef, {
+        creatorId: user?.uid,
+        createdAt: serverTimestamp(),
+        numberOfMembers: 1,
+        privacyType: communityType,
+      });
+    } catch (error: any) {
+      console.log("handleCreateCommunity error", error);
+      setError(error.message);
+    }
+
+    setLoading(false);
+  };
 
   return (
     <>
@@ -166,7 +206,11 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
             >
               Cancel
             </Button>
-            <Button height="30px" onClick={() => {}}>
+            <Button
+              height="30px"
+              onClick={handleCreateCommunity}
+              isLoading={loading}
+            >
               Create Community
             </Button>
           </ModalFooter>
