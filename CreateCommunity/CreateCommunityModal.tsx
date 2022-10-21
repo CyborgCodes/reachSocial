@@ -91,8 +91,9 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
           numberOfMembers: 1,
           privacyType: communityType,
         });
+        //create community snippets on user
         transaction.set(
-          doc(firestore, `users/$(user?.uid)/communitySnippets`, communityName),
+          doc(firestore, `users/${user?.uid}/communitySnippets`, communityName),
           {
             communityId: communityName,
             isModerator: true,
