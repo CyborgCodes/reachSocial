@@ -1,0 +1,138 @@
+import React, { useState } from "react";
+import { Post } from "../../atoms/postsAtom";
+import { AiOutlineDelete, AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { BsChat, BsDot } from "react-icons/bs";
+import { BiLike } from "react-icons/bi";
+import { FaReddit } from "react-icons/fa";
+import {
+  IoArrowDownCircleOutline,
+  IoArrowDownCircleSharp,
+  IoArrowRedoOutline,
+  IoArrowUpCircleOutline,
+  IoArrowUpCircleSharp,
+  IoBookmarkOutline,
+} from "react-icons/io5";
+import { Flex, Stack, Text, Image, Icon, Skeleton } from "@chakra-ui/react";
+import moment from "moment";
+
+type PostItemProps = {
+  post: Post;
+  userIsCreator: boolean;
+  userLikeValue?: number;
+  onLike: () => {};
+  onDeletePost: () => {};
+  onSelectPost: () => void;
+};
+
+const PostItem: React.FC<PostItemProps> = ({
+  post,
+  userIsCreator,
+  userLikeValue,
+  onLike,
+  onDeletePost,
+  onSelectPost,
+}) => {
+  const [loadingImage, setLoadingImage] = useState(true);
+  return (
+    <Flex
+      border="1px solid"
+      bg="white"
+      borderColor="gray.300"
+      borderRadius={4}
+      _hover={{ borderColor: "gray.500" }}
+      cursor="pointer"
+      onClick={onSelectPost}
+    >
+      <Flex direction="column" width="100%">
+        <Stack spacing={1} p="10px">
+          <Stack direction="row" spacing={0.6} align="center" fontSize="9pt">
+            {/* Home Page Check */}
+            <Text>
+              Posted by @{post.creatorDisplayName}{" "}
+              {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
+            </Text>
+          </Stack>
+          <Text fontSize="12pt" fontWeight={600}>
+            {post.title}
+          </Text>
+          <Text fontSize="10pt">{post.body}</Text>
+          {post.imageURL && (
+            <Flex justify="center" align="center" p={2}>
+              {loadingImage && (
+                <Skeleton height="200px" width="100%" borderRadius={4} />
+              )}
+              <Image
+                src={post.imageURL}
+                maxHeight="460px"
+                alt="Post Image"
+                display={loadingImage ? "none" : "unset"}
+                onLoad={() => setLoadingImage(false)}
+              />
+            </Flex>
+          )}
+        </Stack>
+        <Flex ml={1} mb={0.5} color="gray.500">
+          <Flex
+            align="center"
+            p="8px 10px"
+            borderRadius={4}
+            _hover={{ bg: "gray.200" }}
+            cursor="pointer"
+          >
+            <Icon
+              as={userLikeValue === 1 ? AiFillLike : AiOutlineLike}
+              color={userLikeValue === 1 ? "blue.300" : "gray.400"}
+              onClick={onLike}
+            />
+            <Text fontSize="9pt">{post.numberOfLikes}</Text>
+          </Flex>
+          <Flex
+            align="center"
+            p="8px 10px"
+            borderRadius={4}
+            _hover={{ bg: "gray.200" }}
+            cursor="pointer"
+          >
+            <Icon as={BsChat} />
+            <Text fontSize="9pt">{post.numberOfComments}</Text>
+          </Flex>
+
+          <Flex
+            align="center"
+            p="8px 10px"
+            borderRadius={4}
+            _hover={{ bg: "gray.200" }}
+            cursor="pointer"
+          >
+            <Icon as={IoArrowRedoOutline} />
+            <Text fontSize="9pt">Share</Text>
+          </Flex>
+          <Flex
+            align="center"
+            p="8px 10px"
+            borderRadius={4}
+            _hover={{ bg: "gray.200" }}
+            cursor="pointer"
+          >
+            <Icon as={IoBookmarkOutline} />
+            <Text fontSize="9pt">Save</Text>
+          </Flex>
+          {userIsCreator && (
+            <Flex
+              align="center"
+              p="8px 10px"
+              borderRadius={4}
+              _hover={{ bg: "gray.200" }}
+              cursor="pointer"
+              onClick={onDeletePost}
+            >
+              <Icon as={AiOutlineDelete} />
+              <Text fontSize="9pt">Delete</Text>
+            </Flex>
+          )}
+        </Flex>
+      </Flex>
+    </Flex>
+  );
+};
+export default PostItem;
