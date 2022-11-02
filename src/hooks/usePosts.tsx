@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import { postState } from "../../atoms/postsAtom";
 
 const usePosts = () => {
   const [postStateValue, setPostStateValue] = useRecoilState(postState);
 
-  const onLike = async () => {};
+  const onLike = async () => {
+    const [likes, setLikes] = useState(0);
+
+    try {
+    } catch (error) {}
+  };
 
   const onSelectPost = () => {};
 
