@@ -45,7 +45,7 @@ const usePosts = () => {
       if (!existingLike) {
         //create a new postLike document
         const postLikeRef = doc(
-          collection(firestore, "users", `${user?.uid}/postLike`)
+          collection(firestore, "users", `${user?.uid}/postLikes`)
         );
 
         const newLike: PostLike = {
@@ -79,6 +79,8 @@ const usePosts = () => {
           batch.delete(postLikeRef);
           likeChange *= -1;
         } else {
+          updatedPost.numberOfLikes = numberOfLikes + 2 * like;
+
           const likeIdx = postStateValue.postLikes.findIndex(
             (like) => like.id === existingLike.id
           );
