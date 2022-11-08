@@ -93,12 +93,6 @@ const usePosts = () => {
           });
         }
       }
-      //update the post document
-      const postRef = doc(firestore, "posts", post.id!);
-      batch.update(postRef, { numberOfLikes: numberOfLikes + likeChange });
-
-      await batch.commit();
-
       //update state with updated value
       const postIdx = postStateValue.posts.findIndex(
         (item) => item.id === post.id
@@ -109,6 +103,12 @@ const usePosts = () => {
         posts: updatedPosts,
         postLikes: updatedPostLikes,
       }));
+
+      //update the post document
+      const postRef = doc(firestore, "posts", post.id!);
+      batch.update(postRef, { numberOfLikes: numberOfLikes + likeChange });
+
+      await batch.commit();
     } catch (error) {
       console.log("onLike error", error);
     }
