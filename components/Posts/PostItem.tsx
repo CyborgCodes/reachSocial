@@ -24,13 +24,12 @@ import {
   AlertIcon,
 } from "@chakra-ui/react";
 import moment from "moment";
-import { truncate } from "fs/promises";
 
 type PostItemProps = {
   post: Post;
   userIsCreator: boolean;
   userLikeValue?: number;
-  onLike: () => {};
+  onLike: (post: Post, like: number, communityId: string) => void;
   onDeletePost: (post: Post) => Promise<boolean>;
   onSelectPost: () => void;
 };
@@ -119,7 +118,7 @@ const PostItem: React.FC<PostItemProps> = ({
             <Icon
               as={userLikeValue === 1 ? AiFillLike : AiOutlineLike}
               color={userLikeValue === 1 ? "blue.300" : "gray.400"}
-              onClick={onLike}
+              onClick={() => onLike(post, 1, post.communityId)}
             />
             <Text fontSize="9pt">{post.numberOfLikes}</Text>
           </Flex>

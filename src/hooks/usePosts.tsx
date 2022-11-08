@@ -1,13 +1,118 @@
-import { deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+  writeBatch,
+} from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
-import { useRecoilState } from "recoil";
-import { Post, postState } from "../../atoms/postsAtom";
-import { firestore, storage } from "../../firebase/clientApp";
+import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { authModalState } from "../../atoms/AuthModalAtom";
+import { communityState } from "../../atoms/communitiesAtom";
+import { Post, PostLike, postState } from "../../atoms/postsAtom";
+import { auth, firestore, storage } from "../../firebase/clientApp";
 
 const usePosts = () => {
+  const [user] = useAuthState(auth);
   const [postStateValue, setPostStateValue] = useRecoilState(postState);
+  const currentCommunity = useRecoilValue(communityState).currentCommunity;
+  const setAuthModalState = useSetRecoilState(authModalState);
 
-  const onLike = async () => {};
+  const onLike = async (post: Post, like: number, communityId: string) => {
+    //check for a user => if not, open auth modal
+    if (!user?.uid) {
+      setAuthModalState({ open: true, view: "login" });
+      return;
+    }
+
+    try {
+      const { numberOfLikes } = post;
+      const existingLike = postStateValue.postLikes.find(
+        (like) => like.postId === post.id
+      );
+
+      const batch = writeBatch(firestore);
+      const updatedPost = { ...post };
+      const updatedPosts = [...postStateValue.posts];
+      let updatedPostLikes = [...postStateValue.postLikes];
+      let likeChange = like;
+
+      // new like
+      if (!existingLike) {
+        //create a new postLike document
+        const postLikeRef = doc(
+          collection(firestore, "users", `${user?.uid}/postLike`)
+        );
+
+        const newLike: PostLike = {
+          id: postLikeRef.id,
+          postId: post.id!,
+          communityId,
+          likeValue: like, //1 or -1
+        };
+
+        batch.set(postLikeRef, newLike);
+        //add/subtract 1 to/from post.numberOfLikes
+        updatedPost.numberOfLikes = numberOfLikes + like;
+        updatedPostLikes = [...updatedPostLikes, newLike];
+      }
+      //Existing like - user have liked on the post before
+      else {
+        const postLikeRef = doc(
+          firestore,
+          "users",
+          `${user?.uid}/postLikes/${existingLike.id}`
+        );
+        //Removing a like (up => down)
+        if (existingLike.likeValue === like) {
+          //subtract 1 to/from post.numberOfLikes
+          updatedPost.numberOfLikes = numberOfLikes - like;
+          updatedPostLikes = updatedPostLikes.filter(
+            (like) => like.id !== existingLike.id
+          );
+
+          //delete the postLike document
+          batch.delete(postLikeRef);
+          likeChange *= -1;
+        } else {
+          const likeIdx = postStateValue.postLikes.findIndex(
+            (like) => like.id === existingLike.id
+          );
+
+          updatedPostLikes[likeIdx] = {
+            ...existingLike,
+            likeValue: like,
+          };
+          //updating the existing postLike document
+          batch.update(postLikeRef, {
+            likeValue: like,
+          });
+        }
+      }
+      //update the post document
+      const postRef = doc(firestore, "posts", post.id!);
+      batch.update(postRef, { numberOfLikes: numberOfLikes + likeChange });
+
+      await batch.commit();
+
+      //update state with updated value
+      const postIdx = postStateValue.posts.findIndex(
+        (item) => item.id === post.id
+      );
+      updatedPosts[postIdx] = updatedPost;
+      setPostStateValue((prev) => ({
+        ...prev,
+        posts: updatedPosts,
+        postLikes: updatedPostLikes,
+      }));
+    } catch (error) {
+      console.log("onLike error", error);
+    }
+  };
 
   const onSelectPost = () => {};
 
@@ -32,6 +137,38 @@ const usePosts = () => {
       return false;
     }
   };
+
+  const getCommunityPostLikes = async (communityId: string) => {
+    const postLikesQuery = query(
+      collection(firestore, "users", `${user?.uid}/postLikes`),
+      where("communityId", "==", communityId)
+    );
+
+    const postLikeDocs = await getDocs(postLikesQuery);
+    const postLikes = postLikeDocs.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setPostStateValue((prev) => ({
+      ...prev,
+      postLikes: postLikes as PostLike[],
+    }));
+  };
+
+  useEffect(() => {
+    if (!user || !currentCommunity?.id) return;
+    getCommunityPostLikes(currentCommunity?.id);
+  }, [user, currentCommunity]);
+
+  useEffect(() => {
+    if (!user) {
+      // Clear user post likes
+      setPostStateValue((prev) => ({
+        ...prev,
+        postLikes: [],
+      }));
+    }
+  }, [user]);
 
   return {
     postStateValue,

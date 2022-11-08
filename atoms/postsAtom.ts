@@ -14,15 +14,23 @@ export type Post = {
   createdAt: Timestamp;
 };
 
+export type PostLike = {
+  id: string;
+  postId: string;
+  communityId: string;
+  likeValue: number;
+};
+
 interface PostState {
   selectedPost: Post | null;
   posts: Post[];
-  //postLikes
+  postLikes: PostLike[];
 }
 
 const defaultPostState: PostState = {
   selectedPost: null,
   posts: [],
+  postLikes: [],
 };
 
 export const postState = atom<PostState>({
