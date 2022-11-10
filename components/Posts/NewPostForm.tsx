@@ -29,6 +29,7 @@ import {
 import { firestore, storage } from "../../firebase/clientApp";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import useSelectFile from "../../src/hooks/useSelectFile";
+import Posts from "./Posts";
 
 type NewPostFormProps = {
   user: User;
