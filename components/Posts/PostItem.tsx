@@ -24,12 +24,18 @@ import {
   AlertIcon,
 } from "@chakra-ui/react";
 import moment from "moment";
+import { useRouter } from "next/router";
 
 type PostItemProps = {
   post: Post;
   userIsCreator: boolean;
   userLikeValue?: number;
-  onLike: (post: Post, like: number, communityId: string) => void;
+  onLike: (
+    event: React.MouseEvent<SVGElement, MouseEvent>,
+    post: Post,
+    like: number,
+    communityId: string
+  ) => void;
   onDeletePost: (post: Post) => Promise<boolean>;
   onSelectPost?: (post: Post) => void;
 };
@@ -44,10 +50,15 @@ const PostItem: React.FC<PostItemProps> = ({
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
   const [loadingDelete, setLoadingDelete] = useState(false);
+  const router = useRouter();
+  const singlePostPage = !onSelectPost;
 
   const [error, setError] = useState(false);
 
-  const handleDelete = async () => {
+  const handleDelete = async (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
     setLoadingDelete(true);
     try {
       const success = await onDeletePost(post);
@@ -57,6 +68,9 @@ const PostItem: React.FC<PostItemProps> = ({
       }
 
       console.log("Post was successfully deleted");
+      if (singlePostPage) {
+        router.push(`/c/${post.communityId}`);
+      }
     } catch (error: any) {
       setError(error.message);
     }
@@ -67,13 +81,17 @@ const PostItem: React.FC<PostItemProps> = ({
     <Flex
       border="1px solid"
       bg="white"
-      borderColor="gray.300"
-      borderRadius={4}
-      _hover={{ borderColor: "gray.500" }}
-      cursor="pointer"
+      borderColor={singlePostPage ? "white" : "gray.300"}
+      borderRadius={singlePostPage ? "4px 4px 0px 0px" : "4px"}
+      _hover={{ borderColor: singlePostPage ? "none" : "gray.500" }}
+      cursor={singlePostPage ? "unset" : "pointer"}
       onClick={() => onSelectPost && onSelectPost(post)}
     >
-      <Flex direction="column" width="100%">
+      <Flex
+        direction="column"
+        width="100%"
+        borderRadius={singlePostPage ? "0" : "3px 0px 0px 3px"}
+      >
         {error && (
           <Alert status="error">
             <AlertIcon />
@@ -118,7 +136,7 @@ const PostItem: React.FC<PostItemProps> = ({
             <Icon
               as={userLikeValue === 1 ? AiFillLike : AiOutlineLike}
               color={userLikeValue === 1 ? "blue.300" : "gray.400"}
-              onClick={() => onLike(post, 1, post.communityId)}
+              onClick={(event) => onLike(event, post, 1, post.communityId)}
             />
             <Text fontSize="9pt">{post.numberOfLikes}</Text>
           </Flex>

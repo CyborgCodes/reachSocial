@@ -24,7 +24,13 @@ const usePosts = () => {
   const currentCommunity = useRecoilValue(communityState).currentCommunity;
   const setAuthModalState = useSetRecoilState(authModalState);
 
-  const onLike = async (post: Post, like: number, communityId: string) => {
+  const onLike = async (
+    event: React.MouseEvent<SVGElement, MouseEvent>,
+    post: Post,
+    like: number,
+    communityId: string
+  ) => {
+    event.stopPropagation();
     //check for a user => if not, open auth modal
     if (!user?.uid) {
       setAuthModalState({ open: true, view: "login" });
@@ -108,6 +114,12 @@ const usePosts = () => {
         postLikes: updatedPostLikes,
       }));
 
+      if (postStateValue.selectedPost) {
+        setPostStateValue((prev) => ({
+          ...prev,
+          selectedPost: updatedPost,
+        }));
+      }
       //update the post document
       const postRef = doc(firestore, "posts", post.id!);
       batch.update(postRef, { numberOfLikes: numberOfLikes + likeChange });
