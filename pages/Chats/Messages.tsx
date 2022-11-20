@@ -1,8 +1,14 @@
 import React from "react";
+import PageContent from "../../components/Layout/PageContent";
 
 type MessagesProps = {};
 
 const Messages: React.FC<MessagesProps> = () => {
-  return <div>Have a good coding</div>;
+  return (
+    <PageContent>
+      <></>
+      <></>
+    </PageContent>
+  );
 };
 export default Messages;
