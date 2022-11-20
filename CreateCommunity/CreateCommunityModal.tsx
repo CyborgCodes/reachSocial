@@ -99,6 +99,7 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
             isModerator: true,
           }
         );
+        handleClose();
       });
     } catch (error: any) {
       console.log("handleCreateCommunity error", error);
