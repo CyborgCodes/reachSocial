@@ -20,7 +20,7 @@ const icons: React.FC = () => {
           cursor="pointer"
           borderRadius={4}
           _hover={{ bg: "gray.200" }}
-          onClick={() => router.push(`/Chats/${user?.displayName}/Messages`)}
+          onClick={() => router.push(`/Chat/${user?.uid}`)}
         >
           <Icon as={BsChatDots} fontSize={20} />
         </Flex>

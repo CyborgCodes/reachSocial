@@ -11,9 +11,12 @@ import useDirectory from "../../src/hooks/useDirectory";
 import { VscAccount } from "react-icons/vsc";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
+import { useRouter } from "next/router";
 
 const UserProfileItem: React.FC = () => {
+  const router = useRouter();
   const [user] = useAuthState(auth);
+  const { displayName } = router.query;
   const { toggleMenuOpen } = useDirectory();
 
   return (
@@ -43,7 +46,7 @@ const UserProfileItem: React.FC = () => {
           ) : (
             <Icon as={VscAccount} fontSize={50} color="" mr={2} />
           )}
-          <Text fontWeight={600}>{user?.displayName}</Text>
+          <Text fontWeight={600}>{displayName}</Text>
         </Flex>
         <Stack spacing={3}>
           <Text fontSize="9pt">
@@ -55,7 +58,6 @@ const UserProfileItem: React.FC = () => {
         </Stack>
         <Divider />
         <Stack fontSize="10pt" spacing={1}>
-          <Text fontWeight={600}>Admin</Text>
           <Flex align="center" justify="space-between">
             <Text
               color="blue.500"
