@@ -1,15 +1,21 @@
 import { User } from "firebase/auth";
 import React from "react";
-import { Community } from "../../../atoms/communitiesAtom";
 import PageContent from "../../../components/Layout/PageContent";
 import UserProfileItem from "../../../components/UserProfile/UserProfileItem";
+import { getAuth } from "firebase/auth";
+import MyPostsLikes from "../../../components/UserProfile/MyPostsLikes";
+import { Post } from "../../../atoms/postsAtom";
 
-type profileProps = {};
+type profileProps = {
+  post: Post;
+};
 
-const profile: React.FC = () => {
+const profile: React.FC<profileProps> = ({ post }) => {
   return (
     <PageContent>
-      <>Hello</>
+      <>
+        <MyPostsLikes post={post} />
+      </>
       <>
         <UserProfileItem />
       </>

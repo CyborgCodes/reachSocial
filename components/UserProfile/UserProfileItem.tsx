@@ -1,24 +1,32 @@
 import {
   Button,
+  Divider,
   Flex,
   Icon,
   Stack,
   Text,
   Image,
-  Divider,
 } from "@chakra-ui/react";
-import useDirectory from "../../src/hooks/useDirectory";
 import { VscAccount } from "react-icons/vsc";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/clientApp";
-import { useRouter } from "next/router";
+import useDirectory from "../../src/hooks/useDirectory";
 
 const UserProfileItem: React.FC = () => {
-  const router = useRouter();
-  const [user] = useAuthState(auth);
-  const { displayName } = router.query;
   const { toggleMenuOpen } = useDirectory();
 
+  const user = auth.currentUser;
+  if (user !== null) {
+    // The user object has basic properties such as display name, email, etc.
+    const displayName = user.displayName;
+    const email = user.email;
+    const photoURL = user.photoURL;
+    const emailVerified = user.emailVerified;
+
+    // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
+    const uid = user.uid;
+  }
   return (
     <Flex
       direction="column"
@@ -46,7 +54,7 @@ const UserProfileItem: React.FC = () => {
           ) : (
             <Icon as={VscAccount} fontSize={50} color="" mr={2} />
           )}
-          <Text fontWeight={600}>{displayName}</Text>
+          <Text fontWeight={600}>{user?.displayName}</Text>
         </Flex>
         <Stack spacing={3}>
           <Text fontSize="9pt">

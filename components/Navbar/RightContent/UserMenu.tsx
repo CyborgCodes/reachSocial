@@ -85,7 +85,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
               fontWeight={700}
               _hover={{ bg: "blue.500", color: "white" }}
               onClick={() => {
-                router.push(`/Profile/${user.displayName}`);
+                router.push(`/Profile/${user.uid}`);
               }}
             >
               <Flex align="center">
