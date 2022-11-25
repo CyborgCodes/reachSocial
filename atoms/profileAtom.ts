@@ -2,7 +2,7 @@ import { Timestamp } from "firebase/firestore";
 import { atom } from "recoil";
 
 export interface Profile {
-  id: string;
+  uid: string;
   createdAt?: Timestamp;
   email: string;
   photoURL?: string;
@@ -10,7 +10,7 @@ export interface Profile {
 }
 
 export interface ProfileSnippet {
-  id: string;
+  uid: string;
   displayName: string;
   photoURL?: string;
 }

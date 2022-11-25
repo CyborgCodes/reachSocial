@@ -6,14 +6,30 @@ import {
   Stack,
   Text,
   Image,
+  Spinner,
 } from "@chakra-ui/react";
+import { getAuth, updateProfile } from "firebase/auth";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useRef, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { FaReddit } from "react-icons/fa";
 import { VscAccount } from "react-icons/vsc";
-import { auth } from "../../firebase/clientApp";
+import { useSetRecoilState } from "recoil";
+import { Profile, profileState } from "../../atoms/profileAtom";
+import { auth, firestore, storage } from "../../firebase/clientApp";
 import useDirectory from "../../src/hooks/useDirectory";
 
-const UserProfileItem: React.FC = () => {
-  const { toggleMenuOpen } = useDirectory();
+type userProfileItemProps = {
+  loading?: boolean;
+  profileData: Profile;
+};
 
+const UserProfileItem: React.FC<userProfileItemProps> = ({
+  loading,
+  profileData,
+}) => {
+  const { toggleMenuOpen } = useDirectory();
   const user = auth.currentUser;
   if (user !== null) {
     // The user object has basic properties such as display name, email, etc.
@@ -27,6 +43,50 @@ const UserProfileItem: React.FC = () => {
     // you have one. Use User.getToken() instead.
     const uid = user.uid;
   }
+
+  const selectFileRef = useRef<HTMLInputElement>(null);
+  const [selectedFile, setSelectedFile] = useState<string>();
+  const [imageLoading, setImageLoading] = useState(false);
+  const setProfileStateValue = useSetRecoilState(profileState);
+
+  const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+    if (event.target.files?.[0]) {
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      if (readerEvent.target?.result) {
+        setSelectedFile(readerEvent.target?.result as string);
+      }
+    };
+  };
+
+  const updateImage = async () => {
+    if (!selectedFile) return;
+    setImageLoading(true);
+    try {
+      const imageRef = ref(storage, `users/${user?.uid}/image`);
+      await uploadString(imageRef, selectedFile, "data_url");
+      const profileImgURL = await getDownloadURL(imageRef);
+      await updateDoc(doc(firestore, "users"), {
+        photoURL: profileImgURL,
+      });
+      console.log("HERE IS THE PROFILE PIC URL", profileImgURL);
+
+      setProfileStateValue((prev) => ({
+        ...prev,
+        currentProfile: {
+          ...prev.currentProfile,
+          photoURL: profileImgURL,
+        } as Profile,
+      }));
+    } catch (error: any) {
+      console.log("update profile image error", error.message);
+    }
+    setImageLoading(false);
+  };
+
   return (
     <Flex
       direction="column"
@@ -49,12 +109,12 @@ const UserProfileItem: React.FC = () => {
       ></Flex>
       <Flex direction="column" p="12px">
         <Flex align="center" direction="column" mb={2}>
-          {user?.photoURL ? (
-            <Image src={user?.photoURL} />
+          {profileData?.photoURL ? (
+            <Image src={profileData?.photoURL} />
           ) : (
             <Icon as={VscAccount} fontSize={50} color="" mr={2} />
           )}
-          <Text fontWeight={600}>{user?.displayName}</Text>
+          <Text fontWeight={600}>{profileData?.displayName}</Text>
         </Flex>
         <Stack spacing={3}>
           <Text fontSize="9pt">
@@ -71,15 +131,36 @@ const UserProfileItem: React.FC = () => {
               color="blue.500"
               cursor="pointer"
               _hover={{ textDecoration: "underline" }}
+              onClick={() => selectFileRef.current?.click()}
             >
               Change Image
             </Text>
+            {profileData?.photoURL || selectedFile ? (
+              <Image
+                borderRadius="full"
+                boxSize="40px"
+                src={selectedFile || profileData?.photoURL}
+                alt="Profile Image"
+              />
+            ) : (
+              <Icon as={FaReddit} fontSize={40} color="brand.100" mr={2} />
+            )}
           </Flex>
+          {selectedFile &&
+            (imageLoading ? (
+              <Spinner />
+            ) : (
+              <Text cursor="pointer" onClick={updateImage}>
+                Save Changes
+              </Text>
+            ))}
           <input
             id="file-upload"
             type="file"
             accept="image/x-png,image/gif,image/jpeg"
             hidden
+            ref={selectFileRef}
+            onChange={onSelectImage}
           />
         </Stack>
       </Flex>
