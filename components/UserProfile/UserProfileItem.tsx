@@ -11,6 +11,7 @@ import {
 import { getAuth, updateProfile } from "firebase/auth";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { GetServerSidePropsContext } from "next";
 import { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaReddit } from "react-icons/fa";
@@ -109,12 +110,12 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
       ></Flex>
       <Flex direction="column" p="12px">
         <Flex align="center" direction="column" mb={2}>
-          {profileData?.photoURL ? (
-            <Image src={profileData?.photoURL} />
+          {user?.photoURL ? (
+            <Image src={user?.photoURL} />
           ) : (
             <Icon as={VscAccount} fontSize={50} color="" mr={2} />
           )}
-          <Text fontWeight={600}>{profileData?.displayName}</Text>
+          <Text fontWeight={600}>{user?.displayName}</Text>
         </Flex>
         <Stack spacing={3}>
           <Text fontSize="9pt">
@@ -167,4 +168,5 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
     </Flex>
   );
 };
+
 export default UserProfileItem;

@@ -2,26 +2,31 @@ import { Timestamp } from "firebase/firestore";
 import { atom } from "recoil";
 
 export interface Profile {
-  uid: string;
-  createdAt?: Timestamp;
+  id: string;
+  profileId: string;
   email: string;
+  numberOfFollowers: number;
+  numberOfFollowing: number;
   photoURL?: string;
   displayName: string;
 }
 
-export interface ProfileSnippet {
-  uid: string;
-  displayName: string;
+export type Followers = {
+  id: string;
+  profileId: string;
   photoURL?: string;
-}
+  followersValue: number;
+};
 
 interface ProfileState {
-  mySnippet: ProfileSnippet[];
+  profile: Profile[];
+  followers: Followers[];
   currentProfile?: Profile;
 }
 
 const defaultProfileState: ProfileState = {
-  mySnippet: [],
+  profile: [],
+  followers: [],
 };
 
 export const profileState = atom<ProfileState>({

@@ -1,8 +1,10 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { query, collection, where, orderBy, getDocs } from "firebase/firestore";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Post } from "../../atoms/postsAtom";
+import { Profile } from "../../atoms/profileAtom";
 import { auth, firestore } from "../../firebase/clientApp";
 import usePosts from "../../src/hooks/usePosts";
 import PostItem from "../Posts/PostItem";
@@ -10,10 +12,12 @@ import PostLoader from "../Posts/PostLoader";
 
 type MyPostsLikesProps = {
   post: Post;
+  profileData: Profile;
 };
 
-const MyPostsLikes: React.FC<MyPostsLikesProps> = ({ post }) => {
+const MyPostsLikes: React.FC<MyPostsLikesProps> = ({ post, profileData }) => {
   const [user] = useAuthState(auth);
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const {
     postStateValue,
@@ -29,7 +33,8 @@ const MyPostsLikes: React.FC<MyPostsLikesProps> = ({ post }) => {
       //get posts for this community
       const postsQuery = query(
         collection(firestore, "posts"),
-        where("creatorId", "==", user?.uid)
+        where("creatorId", "==", user?.uid),
+        orderBy("createdAt", "desc")
       );
 
       const postDocs = await getDocs(postsQuery);

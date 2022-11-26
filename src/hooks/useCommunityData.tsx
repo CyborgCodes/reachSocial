@@ -100,10 +100,6 @@ const useCommunityData = () => {
         ...prev,
         mySnippets: [...prev.mySnippets, newSnippet],
       }));
-      setCommunityStateValue((prev) => ({
-        ...prev,
-        mySnippets: [...prev.mySnippets, newSnippet],
-      }));
     } catch (error: any) {
       console.log("joinCommunity error", error);
       setError(error.message);
