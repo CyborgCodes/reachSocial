@@ -1,17 +1,13 @@
-import { doc, getDoc } from "firebase/firestore";
-import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import safeJsonStringify from "safe-json-stringify";
 import { Post } from "../../../atoms/postsAtom";
 import { Profile } from "../../../atoms/profileAtom";
 import PageContent from "../../../components/Layout/PageContent";
 import MyPostsLikes from "../../../components/UserProfile/MyPostsLikes";
 import ProfileHeader from "../../../components/UserProfile/ProfileHeader";
 import UserProfileItem from "../../../components/UserProfile/UserProfileItem";
-import { auth, firestore } from "../../../firebase/clientApp";
-import useCommunityData from "../../../src/hooks/useCommunityData";
+import { auth } from "../../../firebase/clientApp";
 
 type profileProps = {
   post: Post;
