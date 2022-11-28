@@ -16,12 +16,9 @@ type profileProps = {
 };
 
 const profile: React.FC<profileProps> = ({ post, profileData, loading }) => {
-  const [user] = useAuthState(auth);
-  const router = useRouter();
-
   return (
     <>
-      <ProfileHeader profileData={profileData} />
+      <ProfileHeader />
       <PageContent>
         <>
           <MyPostsLikes post={post} profileData={profileData} />

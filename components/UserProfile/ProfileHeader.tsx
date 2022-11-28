@@ -8,13 +8,8 @@ import { Profile } from "../../atoms/profileAtom";
 import { auth } from "../../firebase/clientApp";
 import useCommunityData from "../../src/hooks/useCommunityData";
 
-type ProfileHeaderProps = {
-  profileData: Profile;
-};
-
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData }) => {
+const ProfileHeader: React.FC = () => {
   const [user] = useAuthState(auth);
-  const router = useRouter();
 
   return (
     <Flex direction="column" width="100%" height="146px">
@@ -26,7 +21,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData }) => {
               borderRadius="full"
               boxSize="66px"
               src={user?.photoURL}
-              alt="Community Image"
+              alt="Profile Image"
               position="relative"
               top={-3}
               color="blue.500"
@@ -49,7 +44,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData }) => {
                 {user?.displayName}
               </Text>
               <Text fontWeight={600} fontSize="10pt" color="gray.400">
-                u/{user?.displayName}
+                @{user?.displayName}
               </Text>
             </Flex>
             <Button height="30px" pr={6} pl={6} onClick={() => {}}>
