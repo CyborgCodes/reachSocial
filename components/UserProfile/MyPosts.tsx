@@ -10,12 +10,12 @@ import usePosts from "../../src/hooks/usePosts";
 import PostItem from "../Posts/PostItem";
 import PostLoader from "../Posts/PostLoader";
 
-type MyPostsLikesProps = {
+type MyPostsProps = {
   post: Post;
   profileData: Profile;
 };
 
-const MyPostsLikes: React.FC<MyPostsLikesProps> = ({ post, profileData }) => {
+const MyPosts: React.FC<MyPostsProps> = ({ post, profileData }) => {
   const [user] = useAuthState(auth);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const MyPostsLikes: React.FC<MyPostsLikesProps> = ({ post, profileData }) => {
       //get posts for this community
       const postsQuery = query(
         collection(firestore, "posts"),
-        where("creatorId", "==", user?.uid),
+        where("creatorId", "==", profileData?.id),
         orderBy("createdAt", "desc")
       );
 
@@ -55,7 +55,7 @@ const MyPostsLikes: React.FC<MyPostsLikesProps> = ({ post, profileData }) => {
 
   useEffect(() => {
     getPosts();
-  }, [user]);
+  }, [profileData]);
   return (
     <>
       <Text mb={2}>My Posts</Text>
@@ -82,4 +82,4 @@ const MyPostsLikes: React.FC<MyPostsLikesProps> = ({ post, profileData }) => {
     </>
   );
 };
-export default MyPostsLikes;
+export default MyPosts;

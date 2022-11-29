@@ -10,22 +10,20 @@ export interface Profile {
   displayName: string;
 }
 
-export type Followers = {
-  id: string;
+export interface ProfileSnippet {
   profileId: string;
   photoURL?: string;
-  followersValue: number;
-};
+}
 
 interface ProfileState {
   profile: Profile[];
-  followers: Followers[];
+  mySnippets: ProfileSnippet[];
   currentProfile?: Profile;
 }
 
 const defaultProfileState: ProfileState = {
   profile: [],
-  followers: [],
+  mySnippets: [],
 };
 
 export const profileState = atom<ProfileState>({

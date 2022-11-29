@@ -1,10 +1,10 @@
-import { collection, doc, writeBatch } from "firebase/firestore";
+import { collection, doc, increment, writeBatch } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authModalState } from "../../atoms/AuthModalAtom";
-import { Followers, Profile, profileState } from "../../atoms/profileAtom";
+import { Profile, ProfileSnippet, profileState } from "../../atoms/profileAtom";
 import { auth, firestore } from "../../firebase/clientApp";
 
 const useProfileData = () => {
@@ -16,97 +16,91 @@ const useProfileData = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const onFollow = async (
-    event: React.MouseEvent<SVGElement, MouseEvent>,
-    profile: Profile,
-    follow: number,
-    profileId: string
+  const onFollowOrUnfollowProfile = (
+    profileData: Profile,
+    isFollowed: boolean
   ) => {
-    event.stopPropagation();
-    //check for a user => if not, open auth modal
-    if (!user?.uid) {
+    //user validation check
+    if (!user) {
+      //open modal
       setAuthModalState({ open: true, view: "login" });
       return;
     }
+
+    setLoading(true);
+    if (isFollowed) {
+      unfollowProfile(profileData.id);
+      return;
+    }
+    followProfile(profileData);
+  };
+
+  const followProfile = async (profileData: Profile) => {
+    //batch Writes from firebase
     try {
-      const { numberOfFollowers } = profile;
-      const existingFollow = profileStateValue.followers.find(
-        (follow) => follow.profileId === profileId
-      );
+      //creating a new following snippet
       const batch = writeBatch(firestore);
-      const updatedProfile = { ...profile };
-      const updatedProfiles = [...profileStateValue.profile];
-      let updatedProfileFollows = [...profileStateValue.followers];
-      let followChange = follow;
+      const newSnippet: ProfileSnippet = {
+        profileId: profileData.id,
+        photoURL: profileData.photoURL || "",
+      };
 
-      //new follower
-      if (!existingFollow) {
-        //create a new following document
-        const followingRef = doc(
-          collection(firestore, "users", `${user?.uid}/following`)
-        );
-        const newFollow: Followers = {
-          id: followingRef.id,
-          profileId,
-          followersValue: follow,
-        };
-
-        batch.set(followingRef, newFollow);
-        updatedProfile.numberOfFollowers = numberOfFollowers + follow;
-        updatedProfileFollows = [...updatedProfileFollows, newFollow];
-      }
-      //Existing follow
-      else {
-        const followingRef = doc(
-          firestore,
-          "users",
-          `${user?.uid}/following/${existingFollow.id}`
-        );
-        //Removing a follow
-        if (existingFollow.followersValue === follow) {
-          updatedProfile.numberOfFollowers = numberOfFollowers - follow;
-          updatedProfileFollows = updatedProfileFollows.filter(
-            (follow) => follow.id !== existingFollow.id
-          );
-          batch.delete(followingRef);
-          followChange *= -1;
-        } else {
-          updatedProfile.numberOfFollowers = numberOfFollowers + 2 * follow;
-
-          const followIdx = profileStateValue.followers.findIndex(
-            (follow) => follow.id === existingFollow.id
-          );
-          updatedProfileFollows[followIdx] = {
-            ...existingFollow,
-            followersValue: follow,
-          };
-          batch.update(followingRef, {
-            followersValue: follow,
-          });
-        }
-      }
-      //update state with updated value
-      const profileIdx = profileStateValue.profile.findIndex(
-        (item) => item.id === profile.id
+      batch.set(
+        doc(firestore, `users/${user?.uid}/profileSnippets`, profileData.id),
+        newSnippet
       );
-      updatedProfiles[profileIdx] = updatedProfile;
-      setProfileStateValue((prev) => ({
-        ...prev,
-        profile: updatedProfiles,
-        followers: updatedProfileFollows,
-      }));
-      //update the profile doc
-      const profileRef = doc(firestore, "users", user.uid!);
-      batch.update(profileRef, {
-        numberOfFollowers: numberOfFollowers + followChange,
+
+      //update the numberOfFollowers
+      batch.update(doc(firestore, "users", profileData.id), {
+        numberOfFollowers: increment(1),
       });
 
       await batch.commit();
-    } catch (error) {
-      console.log("onFollow error", error);
+
+      //update the recoil state profile.ProfileSnippet
+      setProfileStateValue((prev) => ({
+        ...prev,
+        ProfileSnippets: [...prev.mySnippets, newSnippet],
+      }));
+    } catch (error: any) {
+      console.log("followProfile error", error.message);
     }
+    setLoading(false);
   };
 
-  return {};
+  const unfollowProfile = async (profileId: string) => {
+    //batch writes
+    try {
+      const batch = writeBatch(firestore);
+
+      //deleting the following profile snippet from user
+      batch.delete(
+        doc(firestore, `users/${user?.uid}/profileSnippets`, profileId)
+      );
+      //updating the numberOfFollowers (-1)
+      batch.update(doc(firestore, "users", profileId), {
+        numberOfFollowers: increment(-1),
+      });
+
+      await batch.commit();
+
+      setProfileStateValue((prev) => ({
+        ...prev,
+        mySnippets: prev.mySnippets.filter(
+          (item) => item.profileId !== profileId
+        ),
+      }));
+    } catch (error: any) {
+      console.log("Unfollow error", error.message);
+      setError(error.message);
+    }
+    setLoading(false);
+  };
+
+  return {
+    onFollowOrUnfollowProfile,
+    loading,
+    profileStateValue,
+  };
 };
 export default useProfileData;

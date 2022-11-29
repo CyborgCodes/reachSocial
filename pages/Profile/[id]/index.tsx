@@ -9,7 +9,7 @@ import { Post } from "../../../atoms/postsAtom";
 import { Profile, profileState } from "../../../atoms/profileAtom";
 import NotFound from "../../../components/Community/NotFound";
 import PageContent from "../../../components/Layout/PageContent";
-import MyPostsLikes from "../../../components/UserProfile/MyPostsLikes";
+import MyPostsLikes from "../../../components/UserProfile/MyPosts";
 import ProfileHeader from "../../../components/UserProfile/ProfileHeader";
 import UserProfileItem from "../../../components/UserProfile/UserProfileItem";
 import { auth, firestore } from "../../../firebase/clientApp";
@@ -18,9 +18,20 @@ type profileProps = {
   post: Post;
   profileData: Profile;
   loading?: boolean;
+  onFollow: (
+    event: React.MouseEvent<SVGElement, MouseEvent>,
+    profile: Profile,
+    follow: number,
+    profileId: string
+  ) => void;
 };
 
-const profile: React.FC<profileProps> = ({ post, profileData, loading }) => {
+const profile: React.FC<profileProps> = ({
+  post,
+  profileData,
+  loading,
+  onFollow,
+}) => {
   console.log("here is the data", profileData);
   const setProfileStateValue = useSetRecoilState(profileState);
 

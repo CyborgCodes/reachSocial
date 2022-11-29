@@ -6,23 +6,30 @@ import { FaReddit } from "react-icons/fa";
 import { Community } from "../../atoms/communitiesAtom";
 import { Profile } from "../../atoms/profileAtom";
 import { auth } from "../../firebase/clientApp";
-import useCommunityData from "../../src/hooks/useCommunityData";
+import useProfileData from "../../src/hooks/useProfileData";
 
 type profileHeaderProps = {
   profileData: Profile;
 };
 
 const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
+  const { profileStateValue, onFollowOrUnfollowProfile, loading } =
+    useProfileData();
+
+  const isFollowed = !!profileStateValue.mySnippets.find(
+    (item) => item.profileId === profileData.profileId
+  ); //read from our profileSnipet to check the existence of a follow
+
   return (
     <Flex direction="column" width="100%" height="146px">
       <Box height="50%" bg="blue.400" />
       <Flex justify="center" bg="white" flexGrow={1}>
         <Flex width="95%" maxWidth="860px">
-          {profileData.photoURL ? (
+          {profileStateValue.currentProfile?.photoURL ? (
             <Image
               borderRadius="full"
               boxSize="66px"
-              src={profileData.photoURL}
+              src={profileStateValue.currentProfile?.photoURL}
               alt="Profile Image"
               position="relative"
               top={-3}
@@ -49,8 +56,15 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
                 @{profileData.displayName}
               </Text>
             </Flex>
-            <Button height="30px" pr={6} pl={6} onClick={() => {}}>
-              Follow
+            <Button
+              variant={isFollowed ? "outline" : "solid"}
+              height="30px"
+              pr={6}
+              pl={6}
+              isLoading={loading}
+              // onClick={() => onFollow(profileData, isFollowed)}
+            >
+              {isFollowed ? "Followed" : "Follow"}
             </Button>
           </Flex>
         </Flex>
