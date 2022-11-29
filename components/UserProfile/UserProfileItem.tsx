@@ -8,7 +8,7 @@ import {
   Image,
   Spinner,
 } from "@chakra-ui/react";
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth, updateProfile, User } from "firebase/auth";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { GetServerSidePropsContext } from "next";
@@ -28,22 +28,24 @@ type userProfileItemProps = {
 
 const UserProfileItem: React.FC<userProfileItemProps> = ({
   loading,
+
   profileData,
 }) => {
   const { toggleMenuOpen } = useDirectory();
-  const user = auth.currentUser;
-  if (user !== null) {
-    // The user object has basic properties such as display name, email, etc.
-    const displayName = user.displayName;
-    const email = user.email;
-    const photoURL = user.photoURL;
-    const emailVerified = user.emailVerified;
+  const [user] = useAuthState(auth);
+  // const user = auth.currentUser;
+  // if (user !== null) {
+  //   // The user object has basic properties such as display name, email, etc.
+  //   const displayName = user.displayName;
+  //   const email = user.email;
+  //   const photoURL = user.photoURL;
+  //   const emailVerified = user.emailVerified;
 
-    // The user's ID, unique to the Firebase project. Do NOT use
-    // this value to authenticate with your backend server, if
-    // you have one. Use User.getToken() instead.
-    const uid = user.uid;
-  }
+  //   // The user's ID, unique to the Firebase project. Do NOT use
+  //   // this value to authenticate with your backend server, if
+  //   // you have one. Use User.getToken() instead.
+  //   const uid = user.uid;
+  // }
 
   const selectFileRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<string>();
@@ -110,12 +112,12 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
       ></Flex>
       <Flex direction="column" p="12px">
         <Flex align="center" direction="column" mb={2}>
-          {user?.photoURL ? (
-            <Image src={user?.photoURL} />
+          {profileData?.photoURL ? (
+            <Image src={profileData?.photoURL} />
           ) : (
             <Icon as={VscAccount} fontSize={50} color="" mr={2} />
           )}
-          <Text fontWeight={600}>{user?.displayName}</Text>
+          <Text fontWeight={600}>{profileData?.displayName}</Text>
         </Flex>
         <Stack spacing={3}>
           <Text fontSize="9pt">
@@ -125,45 +127,50 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
             Create Post
           </Button>
         </Stack>
-        <Divider />
-        <Stack fontSize="10pt" spacing={1}>
-          <Flex align="center" justify="space-between">
-            <Text
-              color="blue.500"
-              cursor="pointer"
-              _hover={{ textDecoration: "underline" }}
-              onClick={() => selectFileRef.current?.click()}
-            >
-              Change Image
-            </Text>
-            {profileData?.photoURL || selectedFile ? (
-              <Image
-                borderRadius="full"
-                boxSize="40px"
-                src={selectedFile || profileData?.photoURL}
-                alt="Profile Image"
+        {user?.uid === profileData?.id && (
+          <>
+            <Divider />
+            <Stack fontSize="10pt" spacing={1}>
+              <Text fontWeight={600}>Admin</Text>
+              <Flex align="center" justify="space-between">
+                <Text
+                  color="blue.500"
+                  cursor="pointer"
+                  _hover={{ textDecoration: "underline" }}
+                  onClick={() => selectFileRef.current?.click()}
+                >
+                  Change Image
+                </Text>
+                {profileData?.photoURL || selectedFile ? (
+                  <Image
+                    borderRadius="full"
+                    boxSize="40px"
+                    src={selectedFile || profileData?.photoURL}
+                    alt="Dan Abramov"
+                  />
+                ) : (
+                  <Icon as={FaReddit} fontSize={40} color="brand.100" mr={2} />
+                )}
+              </Flex>
+              {selectedFile &&
+                (imageLoading ? (
+                  <Spinner />
+                ) : (
+                  <Text cursor="pointer" onClick={updateImage}>
+                    Save Changes
+                  </Text>
+                ))}
+              <input
+                id="file-upload"
+                type="file"
+                accept="image/x-png,image/gif,image/jpeg"
+                hidden
+                ref={selectFileRef}
+                onChange={onSelectImage}
               />
-            ) : (
-              <Icon as={FaReddit} fontSize={40} color="brand.100" mr={2} />
-            )}
-          </Flex>
-          {selectedFile &&
-            (imageLoading ? (
-              <Spinner />
-            ) : (
-              <Text cursor="pointer" onClick={updateImage}>
-                Save Changes
-              </Text>
-            ))}
-          <input
-            id="file-upload"
-            type="file"
-            accept="image/x-png,image/gif,image/jpeg"
-            hidden
-            ref={selectFileRef}
-            onChange={onSelectImage}
-          />
-        </Stack>
+            </Stack>
+          </>
+        )}
       </Flex>
     </Flex>
   );

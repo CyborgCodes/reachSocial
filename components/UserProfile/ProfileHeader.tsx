@@ -8,19 +8,21 @@ import { Profile } from "../../atoms/profileAtom";
 import { auth } from "../../firebase/clientApp";
 import useCommunityData from "../../src/hooks/useCommunityData";
 
-const ProfileHeader: React.FC = () => {
-  const [user] = useAuthState(auth);
+type profileHeaderProps = {
+  profileData: Profile;
+};
 
+const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
   return (
     <Flex direction="column" width="100%" height="146px">
       <Box height="50%" bg="blue.400" />
       <Flex justify="center" bg="white" flexGrow={1}>
         <Flex width="95%" maxWidth="860px">
-          {user?.photoURL ? (
+          {profileData.photoURL ? (
             <Image
               borderRadius="full"
               boxSize="66px"
-              src={user?.photoURL}
+              src={profileData.photoURL}
               alt="Profile Image"
               position="relative"
               top={-3}
@@ -41,10 +43,10 @@ const ProfileHeader: React.FC = () => {
           <Flex padding="10px 16px">
             <Flex direction="column" mr={6}>
               <Text fontWeight={800} fontSize="16pt">
-                {user?.displayName}
+                {profileData.displayName}
               </Text>
               <Text fontWeight={600} fontSize="10pt" color="gray.400">
-                @{user?.displayName}
+                @{profileData.displayName}
               </Text>
             </Flex>
             <Button height="30px" pr={6} pl={6} onClick={() => {}}>

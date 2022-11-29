@@ -41,23 +41,23 @@ const useProfileData = () => {
 
       //new follower
       if (!existingFollow) {
-        //create a new followers document
-        const followersRef = doc(
+        //create a new following document
+        const followingRef = doc(
           collection(firestore, "users", `${user?.uid}/following`)
         );
         const newFollow: Followers = {
-          id: followersRef.id,
+          id: followingRef.id,
           profileId,
           followersValue: follow,
         };
 
-        batch.set(followersRef, newFollow);
+        batch.set(followingRef, newFollow);
         updatedProfile.numberOfFollowers = numberOfFollowers + follow;
         updatedProfileFollows = [...updatedProfileFollows, newFollow];
       }
       //Existing follow
       else {
-        const followersRef = doc(
+        const followingRef = doc(
           firestore,
           "users",
           `${user?.uid}/following/${existingFollow.id}`
@@ -68,7 +68,7 @@ const useProfileData = () => {
           updatedProfileFollows = updatedProfileFollows.filter(
             (follow) => follow.id !== existingFollow.id
           );
-          batch.delete(followersRef);
+          batch.delete(followingRef);
           followChange *= -1;
         } else {
           updatedProfile.numberOfFollowers = numberOfFollowers + 2 * follow;
@@ -80,7 +80,7 @@ const useProfileData = () => {
             ...existingFollow,
             followersValue: follow,
           };
-          batch.update(followersRef, {
+          batch.update(followingRef, {
             followersValue: follow,
           });
         }
