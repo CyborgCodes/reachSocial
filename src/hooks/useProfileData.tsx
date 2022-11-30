@@ -1,6 +1,13 @@
-import { collection, doc, increment, writeBatch } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  increment,
+  writeBatch,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authModalState } from "../../atoms/AuthModalAtom";
@@ -35,6 +42,27 @@ const useProfileData = () => {
     followProfile(profileData);
   };
 
+  const getMySnippets = async () => {
+    setLoading(true);
+    try {
+      //get user snippets
+      const snippetDocs = await getDocs(
+        collection(firestore, `users/${user?.uid}/profleSnippets`)
+      );
+      const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
+      setProfileStateValue((prev) => ({
+        ...prev,
+        mySnippets: snippets as ProfileSnippet[],
+      }));
+
+      console.log("here are my profile snippets", snippets);
+    } catch (error: any) {
+      console.log("getMySnippets error", error);
+      setError(error.message);
+    }
+    setLoading(false);
+  };
+
   const followProfile = async (profileData: Profile) => {
     //batch Writes from firebase
     try {
@@ -63,7 +91,8 @@ const useProfileData = () => {
         ProfileSnippets: [...prev.mySnippets, newSnippet],
       }));
     } catch (error: any) {
-      console.log("followProfile error", error.message);
+      console.log("followProfile error", error);
+      setError(error.message);
     }
     setLoading(false);
   };
@@ -83,7 +112,7 @@ const useProfileData = () => {
       });
 
       await batch.commit();
-
+      //update recoil state - profile.mySnippets
       setProfileStateValue((prev) => ({
         ...prev,
         mySnippets: prev.mySnippets.filter(
@@ -96,6 +125,42 @@ const useProfileData = () => {
     }
     setLoading(false);
   };
+
+  const getProfileData = async (profileId: string) => {
+    try {
+      const profileDocRef = doc(firestore, "users", profileId);
+      const profileDoc = await getDoc(profileDocRef);
+
+      setProfileStateValue((prev) => ({
+        ...prev,
+        currentProfile: {
+          id: profileDoc.id,
+          ...profileDoc.data(),
+        } as Profile,
+      }));
+    } catch (error) {
+      console.log("getProfileData error", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!user) {
+      setProfileStateValue((prev) => ({
+        ...prev,
+        mySnippets: [],
+      }));
+      return;
+    }
+    getMySnippets();
+  }, [user]);
+
+  useEffect(() => {
+    const { profileId } = router.query;
+
+    if (profileId && !profileStateValue.currentProfile) {
+      getProfileData(profileId as string);
+    }
+  }, [router.query, profileStateValue.currentProfile]);
 
   return {
     onFollowOrUnfollowProfile,

@@ -6,7 +6,7 @@ import { auth, firestore } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { User } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc } from "firebase/firestore";
 
 const SignUp: React.FC = () => {
   const setAuthModalState = useSetRecoilState(authModalState);

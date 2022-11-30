@@ -18,20 +18,9 @@ type profileProps = {
   post: Post;
   profileData: Profile;
   loading?: boolean;
-  onFollow: (
-    event: React.MouseEvent<SVGElement, MouseEvent>,
-    profile: Profile,
-    follow: number,
-    profileId: string
-  ) => void;
 };
 
-const profile: React.FC<profileProps> = ({
-  post,
-  profileData,
-  loading,
-  onFollow,
-}) => {
+const profile: React.FC<profileProps> = ({ post, profileData, loading }) => {
   console.log("here is the data", profileData);
   const setProfileStateValue = useSetRecoilState(profileState);
 

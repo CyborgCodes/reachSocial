@@ -1,11 +1,12 @@
 import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import { collection, doc } from "firebase/firestore";
+import { Router, useRouter } from "next/router";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaReddit } from "react-icons/fa";
 import { Community } from "../../atoms/communitiesAtom";
-import { Profile } from "../../atoms/profileAtom";
-import { auth } from "../../firebase/clientApp";
+import { Profile, profileState } from "../../atoms/profileAtom";
+import { auth, firestore } from "../../firebase/clientApp";
 import useProfileData from "../../src/hooks/useProfileData";
 
 type profileHeaderProps = {
@@ -15,10 +16,15 @@ type profileHeaderProps = {
 const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
   const { profileStateValue, onFollowOrUnfollowProfile, loading } =
     useProfileData();
+  const [user] = useAuthState(auth);
 
-  const isFollowed = !!profileStateValue.mySnippets.find(
-    (item) => item.profileId === profileData.profileId
-  ); //read from our profileSnipet to check the existence of a follow
+  const isFollowedRef = collection(
+    firestore,
+    "users",
+    `${user?.uid}/profileSnippets`
+  );
+  const isFollowed = user?.uid === isFollowedRef.id;
+  //read from our profileSnipet to check the existence of a follow
 
   return (
     <Flex direction="column" width="100%" height="146px">
@@ -62,10 +68,11 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
               pr={6}
               pl={6}
               isLoading={loading}
-              // onClick={() => onFollow(profileData, isFollowed)}
+              onClick={() => onFollowOrUnfollowProfile(profileData, isFollowed)}
             >
               {isFollowed ? "Followed" : "Follow"}
             </Button>
+            <Text>{profileData?.numberOfFollowers?.toLocaleString()}</Text>
           </Flex>
         </Flex>
       </Flex>
@@ -73,3 +80,10 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
   );
 };
 export default ProfileHeader;
+
+function onFollowOrUnfollowProfile(
+  profileData: Profile,
+  isFollowed: boolean
+): void {
+  throw new Error("Function not implemented.");
+}
