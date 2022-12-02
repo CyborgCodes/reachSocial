@@ -1,9 +1,19 @@
 import { Box, Flex, Icon, Spinner, Stack, Text } from "@chakra-ui/react";
 import { Timestamp } from "firebase/firestore";
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 import { FaReddit } from "react-icons/fa";
-import { AiOutlineDelete, AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineLike } from "react-icons/ai";
+import { BsReply } from "react-icons/bs";
+import CommentInput from "./CommentInput";
+import { useSetRecoilState } from "recoil";
+import { postState } from "../../../atoms/postsAtom";
+import RepliesInput from "./RepliesInput";
+import Replies from "./Replies";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebase/clientApp";
+import usePosts from "../../../src/hooks/usePosts";
+import { User } from "firebase/auth";
 
 export type Comment = {
   id: string;
@@ -29,6 +39,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
   loadingDelete,
   userId,
 }) => {
+  const [openRepliesInput, setOpenRepliesInput] = useState(false);
+  const [user] = useAuthState(auth);
+  const { postStateValue } = usePosts();
   return (
     <Flex>
       <Box mr={2}>
@@ -44,19 +57,27 @@ const CommentItem: React.FC<CommentItemProps> = ({
         </Stack>
         <Text fontSize="10pt">{comment.text}</Text>
         <Stack direction="row" align="center" cursor="pointer" color="gray.500">
-          <Icon as={AiOutlineLike} />
+          <Icon
+            as={BsReply}
+            _hover={{ color: "blue.500" }}
+            onClick={() => setOpenRepliesInput(true)}
+          />
           {userId === comment.creatorId && (
             <>
-              <Text
-                fontSize="9pt"
+              <Icon
+                as={AiOutlineDelete}
                 _hover={{ color: "blue.500" }}
                 onClick={() => onDeleteComment(comment)}
-              >
-                Delete
-              </Text>
+              />
             </>
           )}
         </Stack>
+        <Replies
+          user={user as User}
+          comment={comment as Comment}
+          selectedPost={postStateValue.selectedPost}
+          communityId={postStateValue.selectedPost?.communityId as string}
+        />
       </Stack>
     </Flex>
   );
