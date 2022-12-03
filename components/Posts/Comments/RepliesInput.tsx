@@ -1,6 +1,6 @@
 import { Flex, Textarea, Button, Text } from "@chakra-ui/react";
 import { User } from "firebase/auth";
-import React from "react";
+import React, { useState } from "react";
 import AuthButtons from "../../Navbar/RightContent/AuthButtons";
 
 type RepliesInputProps = {
@@ -18,6 +18,7 @@ const RepliesInput: React.FC<RepliesInputProps> = ({
   createLoading,
   onCreateReply,
 }) => {
+  const [openRepliesInput, setOpenRepliesInput] = useState(false);
   return (
     <Flex direction="column" position="relative">
       {user ? (

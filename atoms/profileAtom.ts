@@ -9,7 +9,6 @@ export interface Profile {
 }
 
 export interface ProfileSnippet {
-  id: string;
   profileId: string;
   photoURL?: string;
 }

@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import { collection, doc } from "firebase/firestore";
 import { Router, useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaReddit } from "react-icons/fa";
 import { Community } from "../../atoms/communitiesAtom";
@@ -17,14 +17,13 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
   const { profileStateValue, onFollowOrUnfollowProfile, loading } =
     useProfileData();
   const [user] = useAuthState(auth);
+  const router = useRouter();
+  const { id } = router.query;
+  const [isFollowed, setIsFollowed] = useState(false);
 
-  const isFollowedRef = collection(
-    firestore,
-    "users",
-    `${user?.uid}/profileSnippets`
-  );
-  const isFollowed = user?.uid === isFollowedRef.id;
-  //read from our profileSnipet to check the existence of a follow
+  if (id === profileStateValue.mySnippets.find((item) => item.profileId)) {
+    setIsFollowed(true);
+  } 
 
   return (
     <Flex direction="column" width="100%" height="146px">
