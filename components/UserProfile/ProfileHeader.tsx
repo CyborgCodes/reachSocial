@@ -4,6 +4,7 @@ import { Router, useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaReddit } from "react-icons/fa";
+import { useSetRecoilState } from "recoil";
 import { Community } from "../../atoms/communitiesAtom";
 import { Profile, profileState } from "../../atoms/profileAtom";
 import { auth, firestore } from "../../firebase/clientApp";
@@ -17,13 +18,19 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
   const { profileStateValue, onFollowOrUnfollowProfile, loading } =
     useProfileData();
   const [user] = useAuthState(auth);
-  const router = useRouter();
-  const { id } = router.query;
-  const [isFollowed, setIsFollowed] = useState(false);
 
-  if (id === profileStateValue.mySnippets.find((item) => item.profileId)) {
-    setIsFollowed(true);
-  } 
+  const isFollowed = !!profileStateValue.mySnippets.find(
+    (item) => item.profileId === profileData.id
+  );
+
+  const [following, setFollowing] = useState(false);
+  const [followersss, setFollowersss] = useState(0);
+
+  const onFollowing = () => {
+    setFollowersss(followersss + 1);
+    setFollowing(true);
+    console.log(following);
+  };
 
   return (
     <Flex direction="column" width="100%" height="146px">
@@ -40,6 +47,7 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
               top={-3}
               color="blue.500"
               border="4px solid white"
+              objectFit="cover"
             />
           ) : (
             <Icon
@@ -71,7 +79,10 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
             >
               {isFollowed ? "Followed" : "Follow"}
             </Button>
-            <Text>{profileData?.numberOfFollowers?.toLocaleString()}</Text>
+            <Button height="30px" pr={6} pl={6} onClick={() => onFollowing()}>
+              Follow me
+            </Button>
+            <Text>{followersss}</Text>
           </Flex>
         </Flex>
       </Flex>

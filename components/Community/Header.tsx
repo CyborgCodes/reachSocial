@@ -31,6 +31,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
               top={-3}
               color="blue.500"
               border="4px solid white"
+              objectFit="cover"
             />
           ) : (
             <Icon

@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   Spinner,
+  Box,
 } from "@chakra-ui/react";
 import { getAuth, updateProfile, User } from "firebase/auth";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
@@ -20,6 +21,7 @@ import { useSetRecoilState } from "recoil";
 import { Profile, profileState } from "../../atoms/profileAtom";
 import { auth, firestore, storage } from "../../firebase/clientApp";
 import useDirectory from "../../src/hooks/useDirectory";
+import useProfileData from "../../src/hooks/useProfileData";
 
 type userProfileItemProps = {
   loading?: boolean;
@@ -28,26 +30,12 @@ type userProfileItemProps = {
 
 const UserProfileItem: React.FC<userProfileItemProps> = ({
   loading,
-
   profileData,
 }) => {
   const { toggleMenuOpen } = useDirectory();
   const [user] = useAuthState(auth);
-  // const user = auth.currentUser;
-  // if (user !== null) {
-  //   // The user object has basic properties such as display name, email, etc.
-  //   const displayName = user.displayName;
-  //   const email = user.email;
-  //   const photoURL = user.photoURL;
-  //   const emailVerified = user.emailVerified;
-
-  //   // The user's ID, unique to the Firebase project. Do NOT use
-  //   // this value to authenticate with your backend server, if
-  //   // you have one. Use User.getToken() instead.
-  //   const uid = user.uid;
-  // }
-
   const selectFileRef = useRef<HTMLInputElement>(null);
+  const { profileStateValue } = useProfileData();
   const [selectedFile, setSelectedFile] = useState<string>();
   const [imageLoading, setImageLoading] = useState(false);
   const setProfileStateValue = useSetRecoilState(profileState);
@@ -72,7 +60,7 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
       const imageRef = ref(storage, `users/${user?.uid}/image`);
       await uploadString(imageRef, selectedFile, "data_url");
       const profileImgURL = await getDownloadURL(imageRef);
-      await updateDoc(doc(firestore, "users"), {
+      await updateDoc(doc(firestore, "users", profileData.id), {
         photoURL: profileImgURL,
       });
       console.log("HERE IS THE PROFILE PIC URL", profileImgURL);
@@ -101,37 +89,57 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
       position="sticky"
     >
       <Flex
-        align="flex-end"
+        align="center"
+        justify="space-between"
         color="white"
-        p="6px 10px"
-        bg="blue.500"
-        height="50px"
+        p={3}
+        bg="blue.400"
         borderRadius="4px 4px 0px 0px"
-        fontWeight={600}
-        backgroundSize="cover"
-      ></Flex>
+      >
+        <Text fontSize="10pt" fontWeight={700}>
+          User Profile
+        </Text>
+      </Flex>
       <Flex direction="column" p="12px">
         <Flex align="center" direction="column" mb={2}>
-          {profileData?.photoURL ? (
-            <Image src={profileData?.photoURL} />
-          ) : (
-            <Icon as={VscAccount} fontSize={50} color="" mr={2} />
+          {user?.uid === profileData?.id && (
+            <Box
+              bg="gray.100"
+              width="100%"
+              p={2}
+              borderRadius={4}
+              border="1px solid"
+              borderColor="gray.300"
+              cursor="pointer"
+              mb={3}
+            >
+              <Text fontSize="9pt" fontWeight={700} color="blue.500">
+                Add description
+              </Text>
+            </Box>
           )}
-          <Text fontWeight={600}>{profileData?.displayName}</Text>
         </Flex>
+        <Flex width="100%" p={2} fontWeight={600} fontSize="10pt">
+          <Flex direction="row" flexGrow={1}>
+            <Text mr={2}>
+              {profileData?.numberOfFollowers?.toLocaleString()}
+            </Text>
+            <Text>Followers</Text>
+          </Flex>
+        </Flex>
+        <Divider mb={3} />
         <Stack spacing={3}>
           <Text fontSize="9pt">
-            Your personal Reach frontpage, built for you.
+            Your personal Reach Profile, built for you.
           </Text>
-          <Button height="30px" onClick={toggleMenuOpen}>
+          <Button height="30px" onClick={toggleMenuOpen} mt={3}>
             Create Post
           </Button>
         </Stack>
         {user?.uid === profileData?.id && (
           <>
-            <Divider />
-            <Stack fontSize="10pt" spacing={1}>
-              <Text fontWeight={600}>Admin</Text>
+            <Divider mt={3} />
+            <Stack fontSize="10pt" spacing={1} mt={3}>
               <Flex align="center" justify="space-between">
                 <Text
                   color="blue.500"
@@ -144,6 +152,7 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
                 {profileData?.photoURL || selectedFile ? (
                   <Image
                     borderRadius="full"
+                    objectFit="cover"
                     boxSize="40px"
                     src={selectedFile || profileData?.photoURL}
                     alt="Dan Abramov"

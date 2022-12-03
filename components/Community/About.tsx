@@ -104,7 +104,6 @@ const About: React.FC<AboutProps> = ({
         <Text fontSize="10pt" fontWeight={700}>
           About Community
         </Text>
-        <Icon as={HiOutlineDotsHorizontal} cursor="pointer" />
       </Flex>
       <Flex direction="column" p={3} bg="white" borderRadius="0px 0px 4px 4px">
         {loading ? (

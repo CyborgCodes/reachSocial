@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Spinner, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Spinner, Stack, Text, Image } from "@chakra-ui/react";
 import { Timestamp } from "firebase/firestore";
 import moment from "moment";
 import React, { useState } from "react";
@@ -11,9 +11,12 @@ import { postState } from "../../../atoms/postsAtom";
 import RepliesInput from "./RepliesInput";
 import Replies from "./Replies";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebase/clientApp";
+import { auth, storage } from "../../../firebase/clientApp";
 import usePosts from "../../../src/hooks/usePosts";
 import { User } from "firebase/auth";
+import { Profile, profileState } from "../../../atoms/profileAtom";
+import useProfileData from "../../../src/hooks/useProfileData";
+import { getDownloadURL, ref } from "firebase/storage";
 
 export type Comment = {
   id: string;
@@ -31,6 +34,7 @@ type CommentItemProps = {
   onDeleteComment: (comment: Comment) => void;
   loadingDelete: boolean;
   userId: string;
+  profileData: Profile;
 };
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -38,18 +42,16 @@ const CommentItem: React.FC<CommentItemProps> = ({
   onDeleteComment,
   loadingDelete,
   userId,
+  profileData,
 }) => {
-  const [openRepliesInput, setOpenRepliesInput] = useState(false);
   const [user] = useAuthState(auth);
   const { postStateValue } = usePosts();
+
   return (
     <Flex>
-      <Box mr={2}>
-        <Icon as={FaReddit} fontSize={30} color="gray.300" />
-      </Box>
       <Stack spacing={1}>
         <Stack direction="row" align="center" fontSize="8pt">
-          <Text>{comment.creatorDisplayText}</Text>
+          <Text fontSize="8pt">By @{comment.creatorDisplayText}</Text>
           <Text color="gray.600">
             {moment(new Date(comment.createdAt.seconds * 1000)).fromNow()}
           </Text>
@@ -60,7 +62,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
           <Icon
             as={BsReply}
             _hover={{ color: "blue.500" }}
-            onClick={() => setOpenRepliesInput(true)}
+            onClick={() => {}}
           />
           {userId === comment.creatorId && (
             <>

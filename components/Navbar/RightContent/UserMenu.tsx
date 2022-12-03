@@ -9,6 +9,7 @@ import {
   Flex,
   MenuDivider,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import { signOut, User } from "firebase/auth";
 import React from "react";
@@ -22,13 +23,17 @@ import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/AuthModalAtom";
 import { communityState } from "../../../atoms/communitiesAtom";
 import { useRouter } from "next/router";
+import { Profile } from "../../../atoms/profileAtom";
+import useProfileData from "../../../src/hooks/useProfileData";
 
 type UserMenuProps = {
   user?: User | null;
+  profileData: Profile;
 };
 
-const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
+const UserMenu: React.FC<UserMenuProps> = ({ user, profileData }) => {
   const router = useRouter();
+  const { profileStateValue } = useProfileData();
   const setAuthModalState = useSetRecoilState(authModalState);
 
   const logout = async () => {
@@ -48,12 +53,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
           <Flex align="center">
             {user ? (
               <>
-                <Icon
-                  fontSize={24}
-                  mr={1}
-                  color="gray.300"
-                  as={FaRedditSquare}
-                />
                 <Flex
                   direction="column"
                   display={{ base: "none", lg: "flex" }}
@@ -66,7 +65,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
                   </Text>
                   <Flex>
                     <Icon as={IoSparkles} color="brand.100" mr={1} />
-                    <Text color="gray.400">1 karma</Text>
+                    <Text color="gray.400">Reach User</Text>
                   </Flex>
                 </Flex>
               </>
