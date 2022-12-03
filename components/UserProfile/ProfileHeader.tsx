@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
-import { collection, doc } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import { Router, useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -15,21 +15,25 @@ type profileHeaderProps = {
 };
 
 const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
-  const { profileStateValue, onFollowOrUnfollowProfile, loading } =
-    useProfileData();
+  const {
+    profileStateValue,
+    onFollowOrUnfollowProfile,
+    loading,
+    followProfile,
+    unfollowProfile,
+  } = useProfileData();
   const [user] = useAuthState(auth);
-
-  const isFollowed = !!profileStateValue.mySnippets.find(
-    (item) => item.profileId === profileData.id
-  );
-
   const [following, setFollowing] = useState(false);
-  const [followersss, setFollowersss] = useState(0);
+  const isFollowed = true;
 
-  const onFollowing = () => {
-    setFollowersss(followersss + 1);
+  const onFollow = () => {
+    followProfile(profileData);
     setFollowing(true);
-    console.log(following);
+  };
+
+  const onUnfollow = () => {
+    unfollowProfile(profileData.id);
+    setFollowing(false);
   };
 
   return (
@@ -69,7 +73,7 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
                 @{profileData.displayName}
               </Text>
             </Flex>
-            <Button
+            {/* <Button
               variant={isFollowed ? "outline" : "solid"}
               height="30px"
               pr={6}
@@ -78,11 +82,30 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
               onClick={() => onFollowOrUnfollowProfile(profileData, isFollowed)}
             >
               {isFollowed ? "Followed" : "Follow"}
-            </Button>
-            <Button height="30px" pr={6} pl={6} onClick={() => onFollowing()}>
-              Follow me
-            </Button>
-            <Text>{followersss}</Text>
+            </Button> */}
+            {following ? (
+              <Button
+                variant={"outline"}
+                height="30px"
+                pr={6}
+                pl={6}
+                isLoading={loading}
+                onClick={() => onUnfollow()}
+              >
+                Followed
+              </Button>
+            ) : (
+              <Button
+                variant={"solid"}
+                height="30px"
+                pr={6}
+                pl={6}
+                isLoading={loading}
+                onClick={() => onFollow()}
+              >
+                Follow
+              </Button>
+            )}
           </Flex>
         </Flex>
       </Flex>

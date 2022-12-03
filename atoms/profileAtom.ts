@@ -5,11 +5,14 @@ export interface Profile {
   email: string;
   numberOfFollowers: number;
   photoURL?: string;
+  isFollowed: boolean;
   displayName: string;
+  profileId: string;
 }
 
 export interface ProfileSnippet {
   profileId: string;
+  isFollowed: boolean;
   photoURL?: string;
 }
 

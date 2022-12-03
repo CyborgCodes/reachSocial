@@ -71,6 +71,7 @@ const useProfileData = () => {
       const newSnippet: ProfileSnippet = {
         profileId: profileData.id,
         photoURL: profileData.photoURL || "",
+        isFollowed: true,
       };
 
       batch.set(
@@ -166,6 +167,8 @@ const useProfileData = () => {
     onFollowOrUnfollowProfile,
     loading,
     profileStateValue,
+    followProfile,
+    unfollowProfile,
   };
 };
 export default useProfileData;
