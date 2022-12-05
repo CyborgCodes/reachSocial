@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
 import { FaReddit } from "react-icons/fa";
+import { GiFireBottle } from "react-icons/gi";
 import useDirectory from "../../src/hooks/useDirectory";
 
 const PersonalHome: React.FC = () => {
@@ -19,7 +20,7 @@ const PersonalHome: React.FC = () => {
         align="flex-end"
         color="white"
         p="6px 10px"
-        bg="blue.500"
+        bg="green.600"
         height="34px"
         borderRadius="4px 4px 0px 0px"
         fontWeight={600}
@@ -28,7 +29,7 @@ const PersonalHome: React.FC = () => {
       ></Flex>
       <Flex direction="column" p="12px">
         <Flex align="center" mb={2}>
-          <Icon as={FaReddit} fontSize={50} color="brand.100" mr={2} />
+          <Icon as={GiFireBottle} fontSize={50} color="brand.100" mr={2} />
           <Text fontWeight={600}>Home</Text>
         </Flex>
         <Stack spacing={3}>

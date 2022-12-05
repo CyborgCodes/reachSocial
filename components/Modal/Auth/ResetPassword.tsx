@@ -5,6 +5,7 @@ import { BsDot, BsReddit } from "react-icons/bs";
 import { authModalState } from "../../../atoms/AuthModalAtom";
 import { auth } from "../../../firebase/clientApp";
 import { useSetRecoilState } from "recoil";
+import { GiFireBottle } from "react-icons/gi";
 
 const ResetPassword: React.FC = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
@@ -21,7 +22,7 @@ const ResetPassword: React.FC = () => {
   };
   return (
     <Flex direction="column" alignItems="center" width="100%">
-      <Icon as={BsReddit} color="brand.100" fontSize={40} mb={2} />
+      <Icon as={GiFireBottle} color="brand.100" fontSize={40} mb={2} />
       <Text fontWeight={700} mb={2}>
         Reset your password
       </Text>

@@ -9,6 +9,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { GiFireBottle } from "react-icons/gi";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -63,7 +64,7 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
         align="flex-end"
         color="white"
         p="6px 10px"
-        bg="blue.500"
+        bg="green.600"
         height="80px"
         borderRadius="4px 4px 0px 0px"
         fontWeight={600}
@@ -121,7 +122,7 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
                           />
                         ) : (
                           <Icon
-                            as={FaReddit}
+                            as={GiFireBottle}
                             fontSize={30}
                             color="brand.100"
                             mr={2}

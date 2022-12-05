@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Post } from "../../atoms/postsAtom";
-import { AiOutlineDelete, AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineFire, AiFillFire } from "react-icons/ai";
 import { BsChat, BsDot } from "react-icons/bs";
 import { BiLike } from "react-icons/bi";
 import { FaReddit } from "react-icons/fa";
@@ -77,6 +77,17 @@ const PostItem: React.FC<PostItemProps> = ({
     setLoadingDelete(false);
   };
 
+  const handleClickName = async (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    try {
+      await router.push(`/Profile/${post.creatorId}`);
+    } catch (error) {
+      console.log("route to profile error", error);
+    }
+  };
+
   return (
     <Flex
       border="1px solid"
@@ -101,7 +112,10 @@ const PostItem: React.FC<PostItemProps> = ({
         <Stack spacing={1} p="10px">
           <Stack direction="row" spacing={0.6} align="center" fontSize="9pt">
             {/* Home Page Check */}
-            <Text onClick={() => {}}>
+            <Text
+              onClick={(event) => handleClickName(event)}
+              _hover={{ color: "green.400" }}
+            >
               Posted by @{post.creatorDisplayName}{" "}
               {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
             </Text>
@@ -134,8 +148,8 @@ const PostItem: React.FC<PostItemProps> = ({
             cursor="pointer"
           >
             <Icon
-              as={userLikeValue === 1 ? AiFillLike : AiOutlineLike}
-              color={userLikeValue === 1 ? "blue.300" : "gray.400"}
+              as={userLikeValue === 1 ? AiFillFire : AiOutlineFire}
+              color={userLikeValue === 1 ? "orange.400" : "gray.400"}
               onClick={(event) => onLike(event, post, 1, post.communityId)}
             />
             <Text fontSize="9pt">{post.numberOfLikes}</Text>

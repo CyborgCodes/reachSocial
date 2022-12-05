@@ -1,10 +1,15 @@
 import React from "react";
+import { Profile } from "../../atoms/profileAtom";
 import Navbar from "../Navbar/Navbar";
 
-export default function Layout({ children }: any) {
+type LayoutProps = {
+  profileData: Profile;
+};
+
+export default function Layout({ profileData, children }: any) {
   return (
     <>
-      <Navbar />
+      <Navbar profileData={profileData} />
       <main>{children}</main>
     </>
   );

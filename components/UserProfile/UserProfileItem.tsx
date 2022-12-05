@@ -1,27 +1,25 @@
 import {
+  Box,
   Button,
   Divider,
   Flex,
   Icon,
-  Stack,
-  Text,
   Image,
   Spinner,
-  Box,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
-import { getAuth, updateProfile, User } from "firebase/auth";
-import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { GiFireBottle } from "react-icons/gi";
+import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import { GetServerSidePropsContext } from "next";
 import { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { FaReddit } from "react-icons/fa";
-import { VscAccount } from "react-icons/vsc";
 import { useSetRecoilState } from "recoil";
 import { Profile, profileState } from "../../atoms/profileAtom";
 import { auth, firestore, storage } from "../../firebase/clientApp";
 import useDirectory from "../../src/hooks/useDirectory";
 import useProfileData from "../../src/hooks/useProfileData";
+import { updateProfile } from "firebase/auth";
 
 type userProfileItemProps = {
   loading?: boolean;
@@ -35,7 +33,6 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
   const { toggleMenuOpen } = useDirectory();
   const [user] = useAuthState(auth);
   const selectFileRef = useRef<HTMLInputElement>(null);
-  const { profileStateValue } = useProfileData();
   const [selectedFile, setSelectedFile] = useState<string>();
   const [imageLoading, setImageLoading] = useState(false);
   const setProfileStateValue = useSetRecoilState(profileState);
@@ -60,9 +57,16 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
       const imageRef = ref(storage, `users/${user?.uid}/image`);
       await uploadString(imageRef, selectedFile, "data_url");
       const profileImgURL = await getDownloadURL(imageRef);
-      await updateDoc(doc(firestore, "users", profileData.id), {
-        photoURL: profileImgURL,
-      });
+      await updateDoc(
+        doc(
+          firestore,
+          `users/${profileData?.id}/profileSnippets`,
+          profileData.id
+        ),
+        {
+          photoURL: profileImgURL,
+        }
+      );
       console.log("HERE IS THE PROFILE PIC URL", profileImgURL);
 
       setProfileStateValue((prev) => ({
@@ -93,7 +97,7 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
         justify="space-between"
         color="white"
         p={3}
-        bg="blue.400"
+        bg="green.600"
         borderRadius="4px 4px 0px 0px"
       >
         <Text fontSize="10pt" fontWeight={700}>
@@ -158,7 +162,12 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
                     alt="Dan Abramov"
                   />
                 ) : (
-                  <Icon as={FaReddit} fontSize={40} color="brand.100" mr={2} />
+                  <Icon
+                    as={GiFireBottle}
+                    fontSize={40}
+                    color="green.400"
+                    mr={2}
+                  />
                 )}
               </Flex>
               {selectedFile &&

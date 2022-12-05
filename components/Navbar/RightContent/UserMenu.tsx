@@ -23,7 +23,7 @@ import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/AuthModalAtom";
 import { communityState } from "../../../atoms/communitiesAtom";
 import { useRouter } from "next/router";
-import { Profile } from "../../../atoms/profileAtom";
+import { Profile, profileState } from "../../../atoms/profileAtom";
 import useProfileData from "../../../src/hooks/useProfileData";
 
 type UserMenuProps = {
@@ -33,12 +33,14 @@ type UserMenuProps = {
 
 const UserMenu: React.FC<UserMenuProps> = ({ user, profileData }) => {
   const router = useRouter();
+  const resetCommunityState = useResetRecoilState(communityState);
   const { profileStateValue } = useProfileData();
   const setAuthModalState = useSetRecoilState(authModalState);
 
   const logout = async () => {
     await signOut(auth);
-    //clear community state
+    resetCommunityState();
+    //clear community state and profile state
   };
 
   return (

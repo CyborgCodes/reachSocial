@@ -47,14 +47,13 @@ const useProfileData = () => {
     try {
       //get user snippets
       const snippetDocs = await getDocs(
-        collection(firestore, `users/${user?.uid}/profleSnippets`)
+        collection(firestore, `users/${user?.uid}/profileSnippets`)
       );
       const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
       setProfileStateValue((prev) => ({
         ...prev,
         mySnippets: snippets as ProfileSnippet[],
       }));
-
       console.log("here are my profile snippets", snippets);
     } catch (error: any) {
       console.log("getMySnippets error", error);
@@ -71,7 +70,7 @@ const useProfileData = () => {
       const newSnippet: ProfileSnippet = {
         profileId: profileData.id,
         photoURL: profileData.photoURL || "",
-        isFollowed: true,
+        displayName: profileData.displayName,
       };
 
       batch.set(
@@ -95,6 +94,7 @@ const useProfileData = () => {
       console.log("followProfile error", error);
       setError(error.message);
     }
+    window.location.reload();
     setLoading(false);
   };
 
@@ -167,8 +167,6 @@ const useProfileData = () => {
     onFollowOrUnfollowProfile,
     loading,
     profileStateValue,
-    followProfile,
-    unfollowProfile,
   };
 };
 export default useProfileData;

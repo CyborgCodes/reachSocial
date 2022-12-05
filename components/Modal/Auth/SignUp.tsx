@@ -5,7 +5,7 @@ import { authModalState } from "../../../atoms/AuthModalAtom";
 import { auth, firestore } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { User } from "firebase/auth";
+import { updateProfile, User } from "firebase/auth";
 import { addDoc, collection, doc } from "firebase/firestore";
 
 const SignUp: React.FC = () => {
@@ -32,7 +32,6 @@ const SignUp: React.FC = () => {
       setError("Password should have atleast 6 characters");
       return;
     }
-
     //password match
     createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
   };

@@ -1,13 +1,10 @@
 import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
-import { collection, doc, getDoc } from "firebase/firestore";
-import { Router, useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { FaReddit } from "react-icons/fa";
-import { useSetRecoilState } from "recoil";
-import { Community } from "../../atoms/communitiesAtom";
-import { Profile, profileState } from "../../atoms/profileAtom";
-import { auth, firestore } from "../../firebase/clientApp";
+import { RiAccountCircleLine } from "react-icons/ri";
+import { Profile } from "../../atoms/profileAtom";
+import { auth } from "../../firebase/clientApp";
+
 import useProfileData from "../../src/hooks/useProfileData";
 
 type profileHeaderProps = {
@@ -15,30 +12,16 @@ type profileHeaderProps = {
 };
 
 const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
-  const {
-    profileStateValue,
-    onFollowOrUnfollowProfile,
-    loading,
-    followProfile,
-    unfollowProfile,
-  } = useProfileData();
+  const { profileStateValue, onFollowOrUnfollowProfile, loading } =
+    useProfileData();
+  const isFollowed = !!profileStateValue.mySnippets.find(
+    (item) => item.profileId === profileData.id
+  );
   const [user] = useAuthState(auth);
-  const [following, setFollowing] = useState(false);
-  const isFollowed = true;
-
-  const onFollow = () => {
-    followProfile(profileData);
-    setFollowing(true);
-  };
-
-  const onUnfollow = () => {
-    unfollowProfile(profileData.id);
-    setFollowing(false);
-  };
 
   return (
     <Flex direction="column" width="100%" height="146px">
-      <Box height="50%" bg="blue.400" />
+      <Box height="50%" bg="green.600" />
       <Flex justify="center" bg="white" flexGrow={1}>
         <Flex width="95%" maxWidth="860px">
           {profileStateValue.currentProfile?.photoURL ? (
@@ -49,17 +32,17 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
               alt="Profile Image"
               position="relative"
               top={-3}
-              color="blue.500"
-              border="4px solid white"
+              color="green.600"
+              border="2px solid white"
               objectFit="cover"
             />
           ) : (
             <Icon
-              as={FaReddit}
-              fontSize={64}
+              as={RiAccountCircleLine}
+              fontSize={70}
               position="relative"
               top={-3}
-              color="blue.500"
+              color="grey.300"
               border="4px solid white"
               borderRadius="50%"
             />
@@ -73,37 +56,20 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
                 @{profileData.displayName}
               </Text>
             </Flex>
-            {/* <Button
-              variant={isFollowed ? "outline" : "solid"}
-              height="30px"
-              pr={6}
-              pl={6}
-              isLoading={loading}
-              onClick={() => onFollowOrUnfollowProfile(profileData, isFollowed)}
-            >
-              {isFollowed ? "Followed" : "Follow"}
-            </Button> */}
-            {following ? (
-              <Button
-                variant={"outline"}
-                height="30px"
-                pr={6}
-                pl={6}
-                isLoading={loading}
-                onClick={() => onUnfollow()}
-              >
-                Followed
-              </Button>
+            {user?.uid === profileData.id ? (
+              <></>
             ) : (
               <Button
-                variant={"solid"}
+                variant={isFollowed ? "outline" : "solid"}
                 height="30px"
                 pr={6}
                 pl={6}
                 isLoading={loading}
-                onClick={() => onFollow()}
+                onClick={() =>
+                  onFollowOrUnfollowProfile(profileData, isFollowed)
+                }
               >
-                Follow
+                {isFollowed ? "Followed" : "Follow"}
               </Button>
             )}
           </Flex>

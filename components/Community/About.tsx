@@ -1,29 +1,29 @@
-import React, { useRef, useState } from "react";
 import {
   Box,
   Button,
   Divider,
   Flex,
   Icon,
+  Image,
   Skeleton,
   SkeletonCircle,
+  Spinner,
   Stack,
   Text,
-  Image,
-  Spinner,
 } from "@chakra-ui/react";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { RiCakeLine } from "react-icons/ri";
+import { GiFireBottle } from "react-icons/gi";
+import { doc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import moment from "moment";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React, { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, firestore, storage } from "../../firebase/clientApp";
-import { Community, communityState } from "../../atoms/communitiesAtom";
-import moment from "moment";
-import { useRecoilValue, useSetRecoilState } from "recoil";
 import { FaReddit } from "react-icons/fa";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
-import { doc, updateDoc } from "firebase/firestore";
+import { RiCakeLine } from "react-icons/ri";
+import { useSetRecoilState } from "recoil";
+import { Community, communityState } from "../../atoms/communitiesAtom";
+import { auth, firestore, storage } from "../../firebase/clientApp";
 
 type AboutProps = {
   communityData: Community;
@@ -85,8 +85,6 @@ const About: React.FC<AboutProps> = ({
     } catch (error: any) {
       console.log("updateImage error", error.message);
     }
-    // April 24 - removed reload
-    // window.location.reload();
 
     setImageLoading(false);
   };
@@ -98,7 +96,7 @@ const About: React.FC<AboutProps> = ({
         align="center"
         p={3}
         color="white"
-        bg="blue.400"
+        bg="green.600"
         borderRadius="4px 4px 0px 0px"
       >
         <Text fontSize="10pt" fontWeight={700}>
@@ -193,9 +191,9 @@ const About: React.FC<AboutProps> = ({
                         />
                       ) : (
                         <Icon
-                          as={FaReddit}
+                          as={GiFireBottle}
                           fontSize={40}
-                          color="brand.100"
+                          color="green.400"
                           mr={2}
                         />
                       )}
