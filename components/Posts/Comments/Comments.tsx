@@ -27,16 +27,19 @@ import { Post, postState } from "../../../atoms/postsAtom";
 import { firestore } from "../../../firebase/clientApp";
 import CommentInput from "./CommentInput";
 import CommentItem from "./CommentItem";
+import { Profile } from "../../../atoms/profileAtom";
 
 type CommentsProps = {
   user: User;
   selectedPost: Post | null;
   communityId: string;
+  profileData: Profile;
 };
 
 const Comments: React.FC<CommentsProps> = ({
   user,
   selectedPost,
+  profileData,
   communityId,
 }) => {
   const [commentText, setCommentText] = useState("");
@@ -199,6 +202,7 @@ const Comments: React.FC<CommentsProps> = ({
                 {comments.map((comment) => (
                   <CommentItem
                     key={comment.id}
+                    profileData={profileData}
                     comment={comment}
                     onDeleteComment={onDeleteComment}
                     loadingDelete={loadingDeleteId === comment.id}

@@ -1,24 +1,5 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  CloseButton,
-  Flex,
-  Icon,
-  Text,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
-import { BiPoll } from "react-icons/bi";
-import { BsLink45Deg, BsMic } from "react-icons/bs";
-import { IoDocumentText, IoImageOutline } from "react-icons/io5";
-import { AiFillCloseCircle } from "react-icons/ai";
-import TabItem from "./TabItem";
-import TextInputs from "./PostForm/TextInputs";
-import ImageUpload from "./PostForm/ImageUpload";
-import { Post } from "../../atoms/postsAtom";
+import { Alert, AlertIcon, Flex, Icon, Text } from "@chakra-ui/react";
 import { User } from "firebase/auth";
-import { useRouter } from "next/router";
 import {
   addDoc,
   collection,
@@ -26,9 +7,16 @@ import {
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
-import { firestore, storage } from "../../firebase/clientApp";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { IoDocumentText, IoImageOutline } from "react-icons/io5";
+import { Post } from "../../atoms/postsAtom";
+import { firestore, storage } from "../../firebase/clientApp";
 import useSelectFile from "../../src/hooks/useSelectFile";
+import ImageUpload from "./PostForm/ImageUpload";
+import TextInputs from "./PostForm/TextInputs";
+import TabItem from "./TabItem";
 
 type NewPostFormProps = {
   user: User;
@@ -42,18 +30,6 @@ const formTabs: TabItem[] = [
   {
     title: "Images & Video",
     icon: IoImageOutline,
-  },
-  {
-    title: "Link",
-    icon: BsLink45Deg,
-  },
-  {
-    title: "Poll",
-    icon: BiPoll,
-  },
-  {
-    title: "Talk",
-    icon: BsMic,
   },
 ];
 

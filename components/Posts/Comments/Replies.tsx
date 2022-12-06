@@ -16,7 +16,6 @@ import {
   query,
   serverTimestamp,
   Timestamp,
-  where,
   writeBatch,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -24,7 +23,6 @@ import { useSetRecoilState } from "recoil";
 import { Comment } from "../../../atoms/commentAtom";
 import { Post, postState } from "../../../atoms/postsAtom";
 import { firestore } from "../../../firebase/clientApp";
-import Comments from "./Comments";
 import RepliesInput from "./RepliesInput";
 import RepliesItem, { Reply } from "./RepliesItem";
 
@@ -150,24 +148,6 @@ const Replies: React.FC<RepliesProps> = ({
 
   return (
     <Box bg="white" borderRadius="0px 0px 4px 4px" p={2}>
-      <Flex
-        direction="column"
-        pl={10}
-        pr={4}
-        mb={6}
-        fontSize="10pt"
-        width="100%"
-      >
-        {!fetchLoading && (
-          <RepliesInput
-            replyText={replyText}
-            setReplyText={setReplyText}
-            user={user}
-            createLoading={createLoading}
-            onCreateReply={onCreateReply}
-          />
-        )}
-      </Flex>
       <Stack spacing={6} p={2}>
         {fetchLoading ? (
           <>
@@ -209,6 +189,24 @@ const Replies: React.FC<RepliesProps> = ({
           </>
         )}
       </Stack>
+      <Flex
+        direction="column"
+        pl={10}
+        pr={4}
+        mb={6}
+        fontSize="10pt"
+        width="100%"
+      >
+        {!fetchLoading && (
+          <RepliesInput
+            replyText={replyText}
+            setReplyText={setReplyText}
+            user={user}
+            createLoading={createLoading}
+            onCreateReply={onCreateReply}
+          />
+        )}
+      </Flex>
     </Box>
   );
 };

@@ -43,7 +43,7 @@ const profile: React.FC<profileProps> = ({ post, profileData, loading }) => {
           <MyPostsLikes post={post} profileData={profileData} />
         </>
         <>
-          <UserProfileItem loading={loading} profileData={profileData} />
+          <UserProfileItem profileData={profileData} />
         </>
       </PageContent>
     </>

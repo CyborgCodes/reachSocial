@@ -57,16 +57,9 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
       const imageRef = ref(storage, `users/${user?.uid}/image`);
       await uploadString(imageRef, selectedFile, "data_url");
       const profileImgURL = await getDownloadURL(imageRef);
-      await updateDoc(
-        doc(
-          firestore,
-          `users/${profileData?.id}/profileSnippets`,
-          profileData.id
-        ),
-        {
-          photoURL: profileImgURL,
-        }
-      );
+      await updateDoc(doc(firestore, "users", profileData.id), {
+        photoURL: profileImgURL,
+      });
       console.log("HERE IS THE PROFILE PIC URL", profileImgURL);
 
       setProfileStateValue((prev) => ({

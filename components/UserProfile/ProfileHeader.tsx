@@ -17,6 +17,7 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
   const isFollowed = !!profileStateValue.mySnippets.find(
     (item) => item.profileId === profileData.id
   );
+  // const isFollowed = false;
   const [user] = useAuthState(auth);
 
   return (
@@ -56,22 +57,16 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
                 @{profileData.displayName}
               </Text>
             </Flex>
-            {user?.uid === profileData.id ? (
-              <></>
-            ) : (
-              <Button
-                variant={isFollowed ? "outline" : "solid"}
-                height="30px"
-                pr={6}
-                pl={6}
-                isLoading={loading}
-                onClick={() =>
-                  onFollowOrUnfollowProfile(profileData, isFollowed)
-                }
-              >
-                {isFollowed ? "Followed" : "Follow"}
-              </Button>
-            )}
+            <Button
+              variant={isFollowed ? "outline" : "solid"}
+              height="30px"
+              pr={6}
+              pl={6}
+              isLoading={loading}
+              onClick={() => onFollowOrUnfollowProfile(profileData, isFollowed)}
+            >
+              {isFollowed ? "Followed" : "Follow"}
+            </Button>
           </Flex>
         </Flex>
       </Flex>

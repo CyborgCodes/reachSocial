@@ -1,22 +1,16 @@
-import { Box, Flex, Icon, Spinner, Stack, Text, Image } from "@chakra-ui/react";
+import { Flex, Icon, Spinner, Stack, Text, Box } from "@chakra-ui/react";
+import { User } from "firebase/auth";
 import { Timestamp } from "firebase/firestore";
 import moment from "moment";
-import React, { useState } from "react";
-import { FaReddit } from "react-icons/fa";
-import { AiOutlineDelete, AiOutlineLike } from "react-icons/ai";
-import { BsReply } from "react-icons/bs";
-import CommentInput from "./CommentInput";
-import { useSetRecoilState } from "recoil";
-import { postState } from "../../../atoms/postsAtom";
-import RepliesInput from "./RepliesInput";
-import Replies from "./Replies";
+import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, storage } from "../../../firebase/clientApp";
+import { AiOutlineDelete } from "react-icons/ai";
+import { BsReply } from "react-icons/bs";
+import { Profile } from "../../../atoms/profileAtom";
+import { auth } from "../../../firebase/clientApp";
 import usePosts from "../../../src/hooks/usePosts";
-import { User } from "firebase/auth";
-import { Profile, profileState } from "../../../atoms/profileAtom";
-import useProfileData from "../../../src/hooks/useProfileData";
-import { getDownloadURL, ref } from "firebase/storage";
+import Replies from "./Replies";
+import { GiFireBottle } from "react-icons/gi";
 
 export type Comment = {
   id: string;
@@ -49,6 +43,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
 
   return (
     <Flex>
+      <Box mr={2}>
+        <Icon as={GiFireBottle} fontSize={30} color="gray.300" />
+      </Box>
       <Stack spacing={1}>
         <Stack direction="row" align="center" fontSize="8pt">
           <Text fontSize="8pt">By @{comment.creatorDisplayText}</Text>

@@ -1,11 +1,10 @@
-import { Flex, Icon, Stack, Spinner, Text, Box } from "@chakra-ui/react";
+import { Box, Flex, Icon, Spinner, Stack, Text } from "@chakra-ui/react";
 import { Timestamp } from "firebase/firestore";
 import moment from "moment";
 import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsReply } from "react-icons/bs";
-import { FaReddit } from "react-icons/fa";
-import RepliesInput from "./RepliesInput";
+import { GiFireBottle } from "react-icons/gi";
 
 export type Reply = {
   id: string;
@@ -34,7 +33,7 @@ const RepliesItem: React.FC<RepliesItemProps> = ({
   return (
     <Flex>
       <Box mr={2}>
-        <Icon as={FaReddit} fontSize={30} color="gray.300" />
+        <Icon as={GiFireBottle} fontSize={30} color="gray.300" />
       </Box>
       <Stack spacing={1}>
         <Stack direction="row" align="center" fontSize="8pt">
