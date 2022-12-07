@@ -114,7 +114,7 @@ const PostItem: React.FC<PostItemProps> = ({
             {/* Home Page Check */}
             <Text
               onClick={(event) => handleClickName(event)}
-              _hover={{ color: "green.400" }}
+              _hover={{ color: "blue.500", cursor: "pointer" }}
             >
               Posted by @{post.creatorDisplayName}{" "}
               {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
@@ -149,6 +149,7 @@ const PostItem: React.FC<PostItemProps> = ({
           >
             <Icon
               as={userLikeValue === 1 ? AiFillFire : AiOutlineFire}
+              mr={1}
               color={userLikeValue === 1 ? "orange.400" : "gray.400"}
               onClick={(event) => onLike(event, post, 1, post.communityId)}
             />
@@ -161,29 +162,8 @@ const PostItem: React.FC<PostItemProps> = ({
             _hover={{ bg: "gray.200" }}
             cursor="pointer"
           >
-            <Icon as={BsChat} />
+            <Icon as={BsChat} mr={1} />
             <Text fontSize="9pt">{post.numberOfComments}</Text>
-          </Flex>
-
-          <Flex
-            align="center"
-            p="8px 10px"
-            borderRadius={4}
-            _hover={{ bg: "gray.200" }}
-            cursor="pointer"
-          >
-            <Icon as={IoArrowRedoOutline} />
-            <Text fontSize="9pt">Share</Text>
-          </Flex>
-          <Flex
-            align="center"
-            p="8px 10px"
-            borderRadius={4}
-            _hover={{ bg: "gray.200" }}
-            cursor="pointer"
-          >
-            <Icon as={IoBookmarkOutline} />
-            <Text fontSize="9pt">Save</Text>
           </Flex>
           {userIsCreator && (
             <Flex
@@ -198,7 +178,7 @@ const PostItem: React.FC<PostItemProps> = ({
                 <Spinner size="sm" />
               ) : (
                 <>
-                  <Icon as={AiOutlineDelete} mr={2} />
+                  <Icon as={AiOutlineDelete} mr={1} />
                   <Text fontSize="9pt">Delete</Text>
                 </>
               )}

@@ -18,7 +18,6 @@ const RepliesInput: React.FC<RepliesInputProps> = ({
   createLoading,
   onCreateReply,
 }) => {
-  const [openRepliesInput, setOpenRepliesInput] = useState(false);
   return (
     <Flex direction="column" position="relative">
       {user ? (
@@ -35,7 +34,8 @@ const RepliesInput: React.FC<RepliesInputProps> = ({
             placeholder="What is your reply?"
             fontSize="10pt"
             borderRadius={4}
-            minHeight="160px"
+            minHeight="95px"
+            minWidth="350px"
             pb={10}
             _placeholder={{ color: "gray.500" }}
             _focus={{

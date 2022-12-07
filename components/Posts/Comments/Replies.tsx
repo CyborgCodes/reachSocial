@@ -127,7 +127,7 @@ const Replies: React.FC<RepliesProps> = ({
       const repliesQuery = query(
         collection(firestore, "comments", `${comment?.id}/replies`),
         // where("postId", "==", selectedPost?.id),
-        orderBy("createdAt", "desc")
+        orderBy("createdAt")
       );
       const repliesDocs = await getDocs(repliesQuery);
       const replies = repliesDocs.docs.map((doc) => ({
@@ -165,6 +165,7 @@ const Replies: React.FC<RepliesProps> = ({
                 direction="column"
                 justify="center"
                 align="center"
+                height="50px"
                 borderTop="1px solid"
                 borderColor="gray.100"
                 p={20}

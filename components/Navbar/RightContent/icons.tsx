@@ -1,4 +1,13 @@
-import { Flex, Icon } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import {
+  Button,
+  Flex,
+  Icon,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import { useRouter } from "next/router";
 import React from "react";
@@ -13,18 +22,6 @@ const icons: React.FC = () => {
   return (
     <Flex>
       <>
-        <Flex
-          mr={1.5}
-          ml={1.5}
-          padding={1}
-          cursor="pointer"
-          borderRadius={4}
-          _hover={{ bg: "gray.200" }}
-          onClick={() => router.push(`/Chat/${user?.uid}`)}
-        >
-          <Icon as={BsChatDots} fontSize={20} />
-        </Flex>
-
         <Flex
           mr={1.5}
           ml={1.5}

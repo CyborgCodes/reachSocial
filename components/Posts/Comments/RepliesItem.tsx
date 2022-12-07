@@ -1,7 +1,8 @@
 import { Box, Flex, Icon, Spinner, Stack, Text } from "@chakra-ui/react";
 import { Timestamp } from "firebase/firestore";
 import moment from "moment";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsReply } from "react-icons/bs";
 import { GiFireBottle } from "react-icons/gi";
@@ -30,14 +31,24 @@ const RepliesItem: React.FC<RepliesItemProps> = ({
   loadingDelete,
   userId,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   return (
     <Flex>
       <Box mr={2}>
-        <Icon as={GiFireBottle} fontSize={30} color="gray.300" />
+        <Icon as={GiFireBottle} fontSize={30} color="blue.300" />
       </Box>
       <Stack spacing={1}>
         <Stack direction="row" align="center" fontSize="8pt">
-          <Text>{reply.creatorDisplayText}</Text>
+          <Text fontSize="8pt">By</Text>
+          <Text
+            fontSize="8pt"
+            color="blue.500"
+            _hover={{ color: "gray.600", cursor: "pointer" }}
+            onClick={() => router.push(`/Profile/${reply.creatorId}`)}
+          >
+            @{reply.creatorDisplayText}
+          </Text>
           <Text color="gray.600">
             {moment(new Date(reply.createdAt.seconds * 1000)).fromNow()}
           </Text>
@@ -45,14 +56,20 @@ const RepliesItem: React.FC<RepliesItemProps> = ({
         </Stack>
         <Text fontSize="10pt">{reply.text}</Text>
         <Stack direction="row" align="center" cursor="pointer" color="gray.500">
-          <Icon as={BsReply} _hover={{ color: "blue.500" }} />
           {userId === reply.creatorId && (
             <>
               <Icon
                 as={AiOutlineDelete}
-                _hover={{ color: "blue.500" }}
+                _hover={{ color: "red.500" }}
                 onClick={() => onDeleteReply(reply)}
               />
+            </>
+          )}
+          {userId === reply.creatorId && (
+            <>
+              <Text fontSize="9pt" align="center">
+                Delete
+              </Text>
             </>
           )}
         </Stack>
