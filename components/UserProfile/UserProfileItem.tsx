@@ -98,24 +98,6 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
         </Text>
       </Flex>
       <Flex direction="column" p="12px">
-        <Flex align="center" direction="column" mb={2}>
-          {user?.uid === profileData?.id && (
-            <Box
-              bg="gray.100"
-              width="100%"
-              p={2}
-              borderRadius={4}
-              border="1px solid"
-              borderColor="gray.300"
-              cursor="pointer"
-              mb={3}
-            >
-              <Text fontSize="9pt" fontWeight={700} color="blue.500">
-                Add description
-              </Text>
-            </Box>
-          )}
-        </Flex>
         <Flex width="100%" p={2} fontWeight={600} fontSize="10pt">
           <Flex direction="row" flexGrow={1}>
             <Text mr={2}>

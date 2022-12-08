@@ -57,16 +57,20 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
                 @{profileData.displayName}
               </Text>
             </Flex>
-            <Button
-              variant={isFollowed ? "outline" : "solid"}
-              height="30px"
-              pr={6}
-              pl={6}
-              isLoading={loading}
-              onClick={() => onFollowOrUnfollowProfile(profileData, isFollowed)}
-            >
-              {isFollowed ? "Followed" : "Follow"}
-            </Button>
+            {user?.uid === profileData.id ? null : (
+              <Button
+                variant={isFollowed ? "outline" : "solid"}
+                height="30px"
+                pr={6}
+                pl={6}
+                isLoading={loading}
+                onClick={() =>
+                  onFollowOrUnfollowProfile(profileData, isFollowed)
+                }
+              >
+                {isFollowed ? "Followed" : "Follow"}
+              </Button>
+            )}
           </Flex>
         </Flex>
       </Flex>

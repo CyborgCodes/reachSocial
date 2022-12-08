@@ -15,14 +15,16 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaReddit } from "react-icons/fa";
 import { Community } from "../../atoms/communitiesAtom";
-import { firestore } from "../../firebase/clientApp";
+import { auth, firestore } from "../../firebase/clientApp";
 import useCommunityData from "../../src/hooks/useCommunityData";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 type RecommendationsProps = {};
 
 const Recommendations: React.FC<RecommendationsProps> = () => {
   const [communities, setCommunities] = useState<Community[]>([]);
   const [loading, setLoading] = useState(false);
+  const [user] = useAuthState(auth);
   const { communityStateValue, onJoinOrLeaveCommunity } = useCommunityData();
 
   const getCommunityRecommendations = async () => {

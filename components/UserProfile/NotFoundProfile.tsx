@@ -2,7 +2,7 @@ import { Flex, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 
-const CommunityNotFound: React.FC = () => {
+const NotFoundProfile: React.FC = () => {
   return (
     <Flex
       direction="column"
@@ -17,4 +17,4 @@ const CommunityNotFound: React.FC = () => {
     </Flex>
   );
 };
-export default CommunityNotFound;
+export default NotFoundProfile;

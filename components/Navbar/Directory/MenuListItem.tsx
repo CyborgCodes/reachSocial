@@ -1,6 +1,7 @@
 import { Flex, MenuItem, Image, Icon } from "@chakra-ui/react";
 import React from "react";
 import { IconType } from "react-icons";
+import { GiFireBottle } from "react-icons/gi";
 import useDirectory from "../../../src/hooks/useDirectory";
 
 type MenuListItemProps = {
@@ -32,7 +33,7 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
         {imageURL ? (
           <Image src={imageURL} borderRadius="full" boxSize="18px" mr={2} />
         ) : (
-          <Icon as={Icon} fontSize={20} mr={2} color={iconColor} />
+          <Icon as={GiFireBottle} fontSize={20} mr={2} color={iconColor} />
         )}
         {displayText}
       </Flex>

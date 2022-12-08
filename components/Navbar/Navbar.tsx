@@ -40,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({ profileData }) => {
         />
       </Flex>
       {user && <Directory />}
-      <SearchInput user={user} />
+      {/* <SearchInput user={user} /> */}
       <RightContent user={user} profileData={profileData} />
     </Flex>
   );

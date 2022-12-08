@@ -8,6 +8,7 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
+import { GiFireBottle } from "react-icons/gi";
 import React from "react";
 import useDirectory from "../../../src/hooks/useDirectory";
 import Communities from "./Communities";
@@ -43,7 +44,7 @@ const UserMenu: React.FC = () => {
               <Icon
                 fontSize={24}
                 mr={{ base: 1, md: 2 }}
-                as={directoryState.selectedMenuItem.icon}
+                as={GiFireBottle}
                 color={directoryState.selectedMenuItem.iconColor}
               />
             )}

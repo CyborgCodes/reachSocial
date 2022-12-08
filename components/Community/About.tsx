@@ -144,10 +144,6 @@ const About: React.FC<AboutProps> = ({
                   </Text>
                   <Text>Members</Text>
                 </Flex>
-                <Flex direction="column" flexGrow={1}>
-                  <Text>1</Text>
-                  <Text>Online</Text>
-                </Flex>
               </Flex>
               <Divider />
               <Flex
