@@ -9,7 +9,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { TiHome } from "react-icons/ti";
 import useDirectory from "../../../src/hooks/useDirectory";
 import Communities from "./Communities";
 

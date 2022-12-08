@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import React from "react";
-import { FaReddit } from "react-icons/fa";
+import { GiFireBottle } from "react-icons/gi";
 import { Community } from "../../atoms/communitiesAtom";
 import useCommunityData from "../../src/hooks/useCommunityData";
 
@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
             />
           ) : (
             <Icon
-              as={FaReddit}
+              as={GiFireBottle}
               fontSize={64}
               position="relative"
               top={-3}

@@ -5,13 +5,13 @@ import {
   Flex,
   Icon,
   Image,
+  Input,
   Skeleton,
   SkeletonCircle,
   Spinner,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { GiFireBottle } from "react-icons/gi";
 import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import moment from "moment";
@@ -19,9 +19,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { FaReddit } from "react-icons/fa";
+import { GiFireBottle } from "react-icons/gi";
 import { RiCakeLine } from "react-icons/ri";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Community, communityState } from "../../atoms/communitiesAtom";
 import { auth, firestore, storage } from "../../firebase/clientApp";
 
@@ -114,21 +114,28 @@ const About: React.FC<AboutProps> = ({
           </Stack>
         ) : (
           <>
-            {user?.uid === communityData?.creatorId && (
-              <Box
-                bg="gray.100"
-                width="100%"
-                p={2}
-                borderRadius={4}
-                border="1px solid"
-                borderColor="gray.300"
-                cursor="pointer"
+            <Box
+              bg="gray.100"
+              width="100%"
+              p={2}
+              borderRadius={4}
+              border="1px solid"
+              borderColor="gray.300"
+              cursor="pointer"
+            >
+              <Text fontSize="10pt" fontWeight={800} mb={1}>
+                Community description
+              </Text>
+              <Text
+                fontSize="9pt"
+                fontWeight={700}
+                color="gray.600"
+                maxWidth="270px"
               >
-                <Text fontSize="9pt" fontWeight={700} color="blue.500">
-                  Add description
-                </Text>
-              </Box>
-            )}
+                {communityData.description}
+              </Text>
+            </Box>
+            <Divider />
             <Stack spacing={2}>
               <Flex width="100%" p={2} fontWeight={600} fontSize="10pt">
                 <Flex direction="column" flexGrow={1}>

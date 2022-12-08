@@ -41,6 +41,7 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
 }) => {
   const [user] = useAuthState(auth);
   const [communityName, setCommunityName] = useState("");
+  const [communityDesc, setCommunityDesc] = useState("");
   const [charsRemaining, setCharsRemaining] = useState(21);
   const [communityType, setCommunityType] = useState("public");
   const [error, setError] = useState("");
@@ -58,6 +59,12 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setCommunityType(event.target.name);
+  };
+
+  const onCommunityDescChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCommunityDesc(event.target.value);
   };
 
   const handleCreateCommunity = async () => {
@@ -90,6 +97,7 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
           createdAt: serverTimestamp(),
           numberOfMembers: 1,
           privacyType: communityType,
+          description: communityDesc,
         });
         //create community snippets on user
         transaction.set(
@@ -132,6 +140,17 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
                 Community names including capitalization cannot be changed
               </Text>
               <Text
+                fontSize={11}
+                color="red.500"
+                fontWeight={700}
+                noOfLines={[1, 2, 3]}
+              >
+                Note! <br />
+                Communities should be related to games. Communities that
+                <br />
+                are not related to games will be deleted by Reach.
+              </Text>
+              <Text
                 position="relative"
                 top="28px"
                 left="10px"
@@ -156,6 +175,20 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
               <Text fontSize="9pt" color="red" pt={1}>
                 {error}
               </Text>
+              <Text fontWeight={600} fontSize={15} mt={2} mb={1}>
+                Description
+              </Text>
+              <Text fontSize={11} color="gray.500" mb={6}>
+                Community description cannot be changed after creation
+              </Text>
+              <Input
+                position="relative"
+                value={communityDesc}
+                size="sm"
+                placeholder="Say something about your community (optional)"
+                fontSize="9pt"
+                onChange={onCommunityDescChange}
+              />
               <Box mt={4} mb={4}>
                 <Text fontWeight={600} fontSize={15}>
                   Community Type
@@ -174,38 +207,6 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
                       </Text>
                       <Text fontSize="8pt" color="gray.500" pt={1}>
                         Anyone can view, post, and comment to this community
-                      </Text>
-                    </Flex>
-                  </Checkbox>
-                  <Checkbox
-                    name="restricted"
-                    isChecked={communityType === "restricted"}
-                    onChange={onCommunityTypeChange}
-                  >
-                    <Flex align="center">
-                      <Icon as={BsFillEyeFill} color="gray.500" mr={2} />
-                      <Text fontSize="10pt" mr={1}>
-                        Restricted
-                      </Text>
-                      <Text fontSize="8pt" color="gray.500" pt={1}>
-                        Anyone can view this community, but only approved users
-                        can post
-                      </Text>
-                    </Flex>
-                  </Checkbox>
-                  <Checkbox
-                    name="private"
-                    isChecked={communityType === "private"}
-                    onChange={onCommunityTypeChange}
-                  >
-                    <Flex align="center">
-                      <Icon as={HiLockClosed} color="gray.500" mr={2} />
-                      <Text fontSize="10pt" mr={1}>
-                        Private
-                      </Text>
-                      <Text fontSize="8pt" color="gray.500" pt={1}>
-                        Only approved users can view and submit to this
-                        community
                       </Text>
                     </Flex>
                   </Checkbox>

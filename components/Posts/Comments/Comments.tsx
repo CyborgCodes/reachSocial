@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import {
-  arrayUnion,
   collection,
   doc,
   getDocs,
@@ -20,14 +19,14 @@ import {
   where,
   writeBatch,
 } from "firebase/firestore";
-import { Comment } from "../../../atoms/commentAtom";
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
+import { Comment } from "../../../atoms/commentAtom";
 import { Post, postState } from "../../../atoms/postsAtom";
+import { Profile } from "../../../atoms/profileAtom";
 import { firestore } from "../../../firebase/clientApp";
 import CommentInput from "./CommentInput";
 import CommentItem from "./CommentItem";
-import { Profile } from "../../../atoms/profileAtom";
 
 type CommentsProps = {
   user: User;

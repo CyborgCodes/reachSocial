@@ -13,6 +13,7 @@ import Replies from "./Replies";
 import { GiFireBottle } from "react-icons/gi";
 import RepliesInput from "./RepliesInput";
 import { useRouter } from "next/router";
+import { Reply } from "./RepliesItem";
 
 export type Comment = {
   id: string;

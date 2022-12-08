@@ -34,12 +34,14 @@ type UserMenuProps = {
 const UserMenu: React.FC<UserMenuProps> = ({ user, profileData }) => {
   const router = useRouter();
   const resetCommunityState = useResetRecoilState(communityState);
+  const resetProfileState = useResetRecoilState(profileState);
   const { profileStateValue } = useProfileData();
   const setAuthModalState = useSetRecoilState(authModalState);
 
   const logout = async () => {
     await signOut(auth);
     resetCommunityState();
+    resetProfileState();
     //clear community state and profile state
   };
 

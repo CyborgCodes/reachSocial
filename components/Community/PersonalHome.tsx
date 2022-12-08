@@ -3,8 +3,11 @@ import { Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
 import { FaReddit } from "react-icons/fa";
 import { GiFireBottle } from "react-icons/gi";
 import useDirectory from "../../src/hooks/useDirectory";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/clientApp";
 
 const PersonalHome: React.FC = () => {
+  const [user] = useAuthState(auth);
   const { toggleMenuOpen } = useDirectory();
   return (
     <Flex
@@ -33,12 +36,15 @@ const PersonalHome: React.FC = () => {
           <Text fontWeight={600}>Home</Text>
         </Flex>
         <Stack spacing={3}>
-          <Text fontSize="9pt">
-            Your personal Reach frontpage, built for you.
+          <Text fontSize="9pt" maxWidth="270px">
+            Welcome to Reach, a social media platform to dicuss about games with
+            communities!
           </Text>
-          <Button height="30px" onClick={toggleMenuOpen}>
-            Create Post
-          </Button>
+          {user ? (
+            <Button height="30px" onClick={toggleMenuOpen}>
+              Create Post
+            </Button>
+          ) : null}
         </Stack>
       </Flex>
     </Flex>

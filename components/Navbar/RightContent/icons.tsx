@@ -1,18 +1,7 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  Flex,
-  Icon,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-} from "@chakra-ui/react";
-import { User } from "firebase/auth";
+import { Flex, Icon } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { BsChatDots } from "react-icons/bs";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { auth } from "../../../firebase/clientApp";
 
@@ -21,7 +10,7 @@ const icons: React.FC = () => {
   const router = useRouter();
   return (
     <Flex>
-      <>
+      {/* <>
         <Flex
           mr={1.5}
           ml={1.5}
@@ -32,7 +21,7 @@ const icons: React.FC = () => {
         >
           <Icon as={IoNotificationsOutline} fontSize={20} />
         </Flex>
-      </>
+      </> */}
     </Flex>
   );
 };

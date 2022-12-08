@@ -1,5 +1,6 @@
 import { IconType } from "react-icons";
 import { TiHome } from "react-icons/ti";
+import { GiFireBottle } from "react-icons/gi";
 import { atom } from "recoil";
 
 export type DirectoryMenuItem = {

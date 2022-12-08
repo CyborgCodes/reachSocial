@@ -1,11 +1,11 @@
 import { Box, Flex, Icon, MenuItem, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import CreateCommunityModal from "../../../CreateCommunity/CreateCommunityModal";
+import { GiFireBottle } from "react-icons/gi";
 import { GrAdd } from "react-icons/gr";
-import { communityState } from "../../../atoms/communitiesAtom";
 import { useRecoilValue } from "recoil";
+import { communityState } from "../../../atoms/communitiesAtom";
+import CreateCommunityModal from "../../../CreateCommunity/CreateCommunityModal";
 import MenuListItem from "./MenuListItem";
-import { FaReddit } from "react-icons/fa";
 
 type CommunitiesProps = {};
 
@@ -35,7 +35,7 @@ const Communities: React.FC<CommunitiesProps> = () => {
       {mySnippets.map((snippet) => (
         <MenuListItem
           key={snippet.communityId}
-          icon={FaReddit}
+          icon={GiFireBottle}
           displayText={`c/${snippet.communityId}`}
           link={`/c/${snippet.communityId}`}
           iconColor="blue.500"
