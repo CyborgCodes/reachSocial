@@ -17,6 +17,7 @@ import useSelectFile from "../../src/hooks/useSelectFile";
 import ImageUpload from "./PostForm/ImageUpload";
 import TextInputs from "./PostForm/TextInputs";
 import Posts from "./Posts";
+//@ts-ignore
 import TabItem from "./TabItem";
 
 type NewPostFormProps = {
@@ -54,6 +55,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
     const { communityId } = router.query;
     //create new post object => type Post
 
+    //@ts-ignore
     const newPost: Post = {
       communityId: communityId as string,
       creatorId: user.uid,
@@ -63,7 +65,6 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
       numberOfComments: 0,
       numberOfLikes: 0,
       createdAt: serverTimestamp() as Timestamp,
-      id: communityId as string,
     };
 
     setLoading(true);
