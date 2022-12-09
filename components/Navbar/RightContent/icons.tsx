@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { auth } from "../../../firebase/clientApp";
 
-const icons: React.FC = () => {
+const Icons: React.FC = () => {
   const [user] = useAuthState(auth);
   const router = useRouter();
   return (
@@ -25,4 +25,4 @@ const icons: React.FC = () => {
     </Flex>
   );
 };
-export default icons;
+export default Icons;
