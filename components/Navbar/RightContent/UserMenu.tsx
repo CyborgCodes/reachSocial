@@ -57,6 +57,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, profileData }) => {
           <Flex align="center">
             {user ? (
               <>
+                <Icon fontSize={24} mr={2} color="gray.300" as={VscAccount} />
                 <Flex
                   direction="column"
                   display={{ base: "none", lg: "flex" }}
