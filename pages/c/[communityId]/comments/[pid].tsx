@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Post } from "../../../../atoms/postsAtom";
+import { Profile, profileState } from "../../../../atoms/profileAtom";
 import About from "../../../../components/Community/About";
 import PageContent from "../../../../components/Layout/PageContent";
 import Comments from "../../../../components/Posts/Comments/Comments";
@@ -12,7 +13,11 @@ import { auth, firestore } from "../../../../firebase/clientApp";
 import useCommunityData from "../../../../src/hooks/useCommunityData";
 import usePosts from "../../../../src/hooks/usePosts";
 
-const PostPage: React.FC = () => {
+type PostPageProps = {
+  profileData: Profile;
+};
+
+const PostPage: React.FC<PostPageProps> = ({ profileData }) => {
   const [user] = useAuthState(auth);
   const { postStateValue, setPostStateValue, onDeletePost, onLike } =
     usePosts();
@@ -62,6 +67,7 @@ const PostPage: React.FC = () => {
           user={user as User}
           selectedPost={postStateValue.selectedPost}
           communityId={postStateValue.selectedPost?.communityId as string}
+          profileData={profileData}
         />
       </>
       <>
