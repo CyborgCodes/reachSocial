@@ -12,13 +12,13 @@ import ProfileHeader from "../../../components/UserProfile/ProfileHeader";
 import UserProfileItem from "../../../components/UserProfile/UserProfileItem";
 import { firestore } from "../../../firebase/clientApp";
 
-type profileProps = {
+type ProfileProps = {
   post: Post;
   profileData: Profile;
   loading?: boolean;
 };
 
-const profile: React.FC<profileProps> = ({ post, profileData, loading }) => {
+const Profile: React.FC<ProfileProps> = ({ post, profileData, loading }) => {
   console.log("here is the data", profileData);
   const setProfileStateValue = useSetRecoilState(profileState);
 
@@ -66,4 +66,4 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 }
 
-export default profile;
+export default Profile;
