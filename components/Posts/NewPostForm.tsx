@@ -62,6 +62,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
       numberOfComments: 0,
       numberOfLikes: 0,
       createdAt: serverTimestamp() as Timestamp,
+      id: communityId as string,
     };
 
     setLoading(true);
