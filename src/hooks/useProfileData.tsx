@@ -124,6 +124,7 @@ const useProfileData = () => {
       console.log("Unfollow error", error.message);
       setError(error.message);
     }
+    window.location.reload();
     setLoading(false);
   };
 
