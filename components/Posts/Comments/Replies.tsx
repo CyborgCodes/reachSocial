@@ -180,8 +180,6 @@ const Replies: React.FC<RepliesProps> = ({
                   <RepliesItem
                     key={replies.id}
                     reply={replies}
-                    onDeleteReply={onDeleteReply}
-                    loadingDelete={loadingDeleteId === replies.id}
                     userId={user.uid}
                   />
                 ))}

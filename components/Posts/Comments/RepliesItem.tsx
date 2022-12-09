@@ -20,17 +20,10 @@ export type Reply = {
 
 type RepliesItemProps = {
   reply: Reply;
-  onDeleteReply: (reply: Reply) => void;
-  loadingDelete: boolean;
   userId: string;
 };
 
-const RepliesItem: React.FC<RepliesItemProps> = ({
-  reply,
-  onDeleteReply,
-  loadingDelete,
-  userId,
-}) => {
+const RepliesItem: React.FC<RepliesItemProps> = ({ reply, userId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   return (
@@ -52,7 +45,6 @@ const RepliesItem: React.FC<RepliesItemProps> = ({
           <Text color="gray.600">
             {moment(new Date(reply.createdAt.seconds * 1000)).fromNow()}
           </Text>
-          {loadingDelete && <Spinner size="sm" />}
         </Stack>
         <Text fontSize="10pt">{reply.text}</Text>
         {/* <Stack direction="row" align="center" cursor="pointer" color="gray.500">
