@@ -55,7 +55,7 @@ const RepliesItem: React.FC<RepliesItemProps> = ({
           {loadingDelete && <Spinner size="sm" />}
         </Stack>
         <Text fontSize="10pt">{reply.text}</Text>
-        <Stack direction="row" align="center" cursor="pointer" color="gray.500">
+        {/* <Stack direction="row" align="center" cursor="pointer" color="gray.500">
           {userId === reply.creatorId && (
             <>
               <Icon
@@ -72,7 +72,7 @@ const RepliesItem: React.FC<RepliesItemProps> = ({
               </Text>
             </>
           )}
-        </Stack>
+        </Stack> */}
       </Stack>
     </Flex>
   );
