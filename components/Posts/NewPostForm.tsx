@@ -16,6 +16,7 @@ import { firestore, storage } from "../../firebase/clientApp";
 import useSelectFile from "../../src/hooks/useSelectFile";
 import ImageUpload from "./PostForm/ImageUpload";
 import TextInputs from "./PostForm/TextInputs";
+import Posts from "./Posts";
 import TabItem from "./TabItem";
 
 type NewPostFormProps = {
@@ -62,7 +63,6 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
       numberOfComments: 0,
       numberOfLikes: 0,
       createdAt: serverTimestamp() as Timestamp,
-      id: communityId as string,
     };
 
     setLoading(true);
