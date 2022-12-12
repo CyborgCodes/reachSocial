@@ -27,7 +27,7 @@ const TextInputs: React.FC<TextInputsProps> = ({
         onChange={onChange}
         fontSize="10pt"
         borderRadius={4}
-        placeholder="Title"
+        placeholder="Title (required)"
         _placeholder={{ color: "gray.500" }}
         _focus={{
           outline: "none",
