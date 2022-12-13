@@ -1,29 +1,26 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
+  Flex,
+  Icon,
   Menu,
   MenuButton,
-  Button,
-  MenuList,
-  MenuItem,
-  Icon,
-  Flex,
   MenuDivider,
+  MenuItem,
+  MenuList,
   Text,
-  Image,
 } from "@chakra-ui/react";
 import { signOut, User } from "firebase/auth";
+import { useRouter } from "next/router";
 import React from "react";
-import { FaRedditSquare } from "react-icons/fa";
-import { VscAccount } from "react-icons/vsc";
-import { IoSparkles } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+import { IoSparkles } from "react-icons/io5";
 import { MdOutlineLogin } from "react-icons/md";
-import { auth } from "../../../firebase/clientApp";
+import { VscAccount } from "react-icons/vsc";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/AuthModalAtom";
 import { communityState } from "../../../atoms/communitiesAtom";
-import { useRouter } from "next/router";
 import { Profile, profileState } from "../../../atoms/profileAtom";
+import { auth } from "../../../firebase/clientApp";
 import useProfileData from "../../../src/hooks/useProfileData";
 
 type UserMenuProps = {
