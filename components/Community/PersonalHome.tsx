@@ -1,5 +1,12 @@
 import React from "react";
-import { Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Icon,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { FaReddit } from "react-icons/fa";
 import { GiFireBottle } from "react-icons/gi";
 import useDirectory from "../../src/hooks/useDirectory";
@@ -12,11 +19,12 @@ const PersonalHome: React.FC = () => {
   return (
     <Flex
       direction="column"
-      bg="white"
+      bg={useColorModeValue("white", "gray.900")}
       borderRadius={4}
       cursor="pointer"
       border="1px solid"
-      borderColor="gray.300"
+      mb={4}
+      borderColor={useColorModeValue("gray.300", "gray.700")}
       position="sticky"
     >
       <Flex
@@ -27,12 +35,17 @@ const PersonalHome: React.FC = () => {
         height="34px"
         borderRadius="4px 4px 0px 0px"
         fontWeight={600}
-        bgImage="url(/images/redditPersonalHome.png)"
+        // bgImage=""
         backgroundSize="cover"
       ></Flex>
       <Flex direction="column" p="12px">
         <Flex align="center" mb={2}>
-          <Icon as={GiFireBottle} fontSize={50} color="brand.100" mr={2} />
+          <Icon
+            as={GiFireBottle}
+            fontSize={50}
+            color={useColorModeValue("green.300", "gray.300")}
+            mr={2}
+          />
           <Text fontWeight={600}>Home</Text>
         </Flex>
         <Stack spacing={3}>
@@ -42,7 +55,7 @@ const PersonalHome: React.FC = () => {
           </Text>
           {user ? (
             <Button height="30px" onClick={toggleMenuOpen}>
-              Create Post
+              Create Community
             </Button>
           ) : null}
         </Stack>

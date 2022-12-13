@@ -1,4 +1,11 @@
-import { Alert, AlertIcon, Flex, Icon, Text } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  Flex,
+  Icon,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import {
   addDoc,
@@ -17,7 +24,7 @@ import useSelectFile from "../../src/hooks/useSelectFile";
 import ImageUpload from "./PostForm/ImageUpload";
 import TextInputs from "./PostForm/TextInputs";
 import Posts from "./Posts";
-//@ts-ignore
+// @ts-ignore
 import TabItem from "./TabItem";
 
 type NewPostFormProps = {
@@ -107,7 +114,12 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
   };
 
   return (
-    <Flex direction="column" bg="white" borderRadius={4} mt={2}>
+    <Flex
+      direction="column"
+      bg={useColorModeValue("white", "gray.900")}
+      borderRadius={4}
+      mt={2}
+    >
       <Flex width="100%">
         <title>{TITLE}</title>
         {formTabs.map((item) => (
@@ -128,7 +140,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
             loading={loading}
           />
         )}
-        {selectedTab === "Images & Video" && (
+        {selectedTab === "Images & GIFs" && (
           <ImageUpload
             selectedFile={selectedFile}
             onSelectImage={onSelectFile}

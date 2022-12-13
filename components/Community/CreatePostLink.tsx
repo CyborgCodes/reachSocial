@@ -1,4 +1,4 @@
-import { Flex, Icon, Input } from "@chakra-ui/react";
+import { Flex, Icon, Input, useColorModeValue } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -36,11 +36,11 @@ const CreatePostLink: React.FC = () => {
     <Flex
       justify="space-evenly"
       align="center"
-      bg="white"
+      bg={useColorModeValue("gray.100", "gray.900")}
       height="56px"
       borderRadius={4}
       border="1px solid"
-      borderColor="gray.300"
+      borderColor={useColorModeValue("gray.300", "gray.600")}
       p={2}
       mb={4}
     >

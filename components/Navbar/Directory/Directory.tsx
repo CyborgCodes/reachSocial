@@ -7,6 +7,7 @@ import {
   MenuButton,
   MenuList,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { GiFireBottle } from "react-icons/gi";
 import React from "react";
@@ -24,7 +25,10 @@ const UserMenu: React.FC = () => {
         borderRadius={4}
         mr={2}
         ml={{ base: 0, md: 2 }}
-        _hover={{ outline: "1px solid", outlineColor: "gray.200" }}
+        _hover={{
+          outline: "1px solid",
+          outlineColor: "gray.200",
+        }}
         onClick={toggleMenuOpen}
       >
         <Flex

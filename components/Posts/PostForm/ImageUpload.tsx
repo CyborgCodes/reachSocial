@@ -1,4 +1,10 @@
-import { Button, Flex, Image, Stack } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Image,
+  Stack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React, { useRef } from "react";
 
 type ImageUploadProps = {
@@ -40,7 +46,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           align="center"
           p={20}
           border="1px dashed"
-          borderColor="gray.200"
+          borderColor={useColorModeValue("gray.200", "gray.600")}
           width="100%"
           borderRadius={4}
         >

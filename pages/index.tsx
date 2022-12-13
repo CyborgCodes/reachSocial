@@ -1,3 +1,4 @@
+import { useColorMode } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useAuthState } from "react-firebase-hooks/auth";
 import CreatePostLink from "../components/Community/CreatePostLink";

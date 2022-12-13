@@ -1,4 +1,11 @@
-import { Button, Flex, Input, Stack, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Input,
+  Stack,
+  Textarea,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 
 type TextInputsProps = {
@@ -31,7 +38,8 @@ const TextInputs: React.FC<TextInputsProps> = ({
         _placeholder={{ color: "gray.500" }}
         _focus={{
           outline: "none",
-          bg: "white",
+          bg: useColorModeValue("white", "gray.800"),
+          color: useColorModeValue("black", "white"),
           border: "1px solid",
           borderColor: "black",
         }}
@@ -47,7 +55,8 @@ const TextInputs: React.FC<TextInputsProps> = ({
         _placeholder={{ color: "gray.500" }}
         _focus={{
           outline: "none",
-          bg: "white",
+          bg: useColorModeValue("white", "gray.800"),
+          color: useColorModeValue("black", "white"),
           border: "1px solid",
           borderColor: "black",
         }}

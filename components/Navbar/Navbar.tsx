@@ -1,4 +1,11 @@
-import { Flex, Icon, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Icon,
+  Image,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { defaultMenuItem } from "../../atoms/directoryMenuAtom";
@@ -9,6 +16,7 @@ import { GiFireBottle } from "react-icons/gi";
 import Directory from "./Directory/Directory";
 import RightContent from "./RightContent/RightContent";
 import SearchInput from "./SearchInput";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
 
 type NavbarProps = {
   profileData: Profile;
@@ -20,10 +28,14 @@ const Navbar: React.FC<NavbarProps> = ({ profileData }) => {
 
   return (
     <Flex
-      bg="white"
+      bg={useColorModeValue("white", "gray.900")}
+      boxShadow={useColorModeValue("xl", "dark-lg")}
       height="44px"
+      position="fixed"
+      width="100%"
+      zIndex="100"
       padding="6px 12px"
-      justify={{ md: "space-between" }}
+      justify={{ base: "space-between", md: "space-between" }}
     >
       <Flex
         align="center"
@@ -41,7 +53,10 @@ const Navbar: React.FC<NavbarProps> = ({ profileData }) => {
       </Flex>
       {user && <Directory />}
       {/* <SearchInput user={user} /> */}
-      <RightContent user={user} profileData={profileData} />
+      <Flex align="center">
+        <ColorModeSwitcher />
+        <RightContent user={user} profileData={profileData} />
+      </Flex>
     </Flex>
   );
 };

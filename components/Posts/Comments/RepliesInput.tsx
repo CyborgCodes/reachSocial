@@ -1,4 +1,10 @@
-import { Flex, Textarea, Button, Text } from "@chakra-ui/react";
+import {
+  Flex,
+  Textarea,
+  Button,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import React, { useState } from "react";
 import AuthButtons from "../../Navbar/RightContent/AuthButtons";
@@ -40,7 +46,8 @@ const RepliesInput: React.FC<RepliesInputProps> = ({
             _placeholder={{ color: "gray.500" }}
             _focus={{
               outline: "none",
-              bg: "white",
+              bg: useColorModeValue("white", "gray.800"),
+              color: useColorModeValue("black", "white"),
               border: "1px solid black",
             }}
           />
@@ -50,7 +57,7 @@ const RepliesInput: React.FC<RepliesInputProps> = ({
             right={0.1}
             bottom="1px"
             justify="flex-end"
-            bg="gray.100"
+            bg={useColorModeValue("gray.100", "gray.800")}
             p="6px 8px"
             borderRadius="0px 0px 4px 4px"
           >

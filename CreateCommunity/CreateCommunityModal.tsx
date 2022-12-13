@@ -15,6 +15,7 @@ import {
   Checkbox,
   Flex,
   Icon,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import {
   doc,
@@ -215,7 +216,10 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
             </ModalBody>
           </Box>
 
-          <ModalFooter bg="gray.100" borderRadius="0px 0px 10px 10px">
+          <ModalFooter
+            bg={useColorModeValue("gray.100", "gray.800")}
+            borderRadius="0px 0px 10px 10px"
+          >
             <Button
               variant="outline"
               height="30px"

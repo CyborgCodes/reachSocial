@@ -1,4 +1,4 @@
-import { Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import { query, collection, where, orderBy, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -58,7 +58,19 @@ const MyPosts: React.FC<MyPostsProps> = ({ post, profileData }) => {
   }, [profileData]);
   return (
     <>
-      <Text mb={2}>My Posts</Text>
+      <Flex
+        align="center"
+        bg={useColorModeValue("white", "gray.900")}
+        fontWeight={700}
+        height="56px"
+        borderRadius={4}
+        border="1px solid"
+        p={2}
+        borderColor={useColorModeValue("gray.300", "gray.700")}
+        mb={4}
+      >
+        <Text>My Posts</Text>
+      </Flex>
       {loading ? (
         <PostLoader />
       ) : (

@@ -22,6 +22,7 @@ import {
   Spinner,
   Alert,
   AlertIcon,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { useRouter } from "next/router";
@@ -91,8 +92,12 @@ const PostItem: React.FC<PostItemProps> = ({
   return (
     <Flex
       border="1px solid"
-      bg="white"
-      borderColor={singlePostPage ? "white" : "gray.300"}
+      bg={useColorModeValue("white", "gray.900")}
+      borderColor={
+        singlePostPage
+          ? useColorModeValue("white", "gray.700")
+          : useColorModeValue("gray.300", "gray.700")
+      }
       borderRadius={singlePostPage ? "4px 4px 0px 0px" : "4px"}
       _hover={{ borderColor: singlePostPage ? "none" : "gray.500" }}
       cursor={singlePostPage ? "unset" : "pointer"}

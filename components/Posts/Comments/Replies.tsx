@@ -5,6 +5,7 @@ import {
   SkeletonText,
   Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import {
@@ -147,12 +148,20 @@ const Replies: React.FC<RepliesProps> = ({
   }, [selectedPost]);
 
   return (
-    <Box bg="white" borderRadius="0px 0px 4px 4px" p={2}>
+    <Box
+      bg={useColorModeValue("white", "gray.900")}
+      borderRadius="0px 0px 4px 4px"
+      p={2}
+    >
       <Stack spacing={6} p={2}>
         {fetchLoading ? (
           <>
-            {[0, 1, 2].map((item) => (
-              <Box key={item} padding="6" bg="white">
+            {[0].map((item) => (
+              <Box
+                key={item}
+                padding="6"
+                bg={useColorModeValue("white", "gray.800")}
+              >
                 <SkeletonCircle size="10" />
                 <SkeletonText mt="4" noOfLines={4} spacing="4" />
               </Box>
@@ -166,8 +175,7 @@ const Replies: React.FC<RepliesProps> = ({
                 justify="center"
                 align="center"
                 height="50px"
-                borderTop="1px solid"
-                borderColor="gray.100"
+                borderColor={useColorModeValue("gray.100", "gray.300")}
                 p={20}
               >
                 <Text fontWeight={700} opacity={0.3}>

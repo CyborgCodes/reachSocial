@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { RiAccountCircleLine } from "react-icons/ri";
@@ -21,9 +29,14 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
   const [user] = useAuthState(auth);
 
   return (
-    <Flex direction="column" width="100%" height="146px">
+    <Flex direction="column" width="100%" height="180px">
       <Box height="50%" bg="green.600" />
-      <Flex justify="center" bg="white" flexGrow={1}>
+      <Flex
+        justify="center"
+        bg={useColorModeValue("white", "gray.900")}
+        boxShadow={useColorModeValue("xl", "dark-lg")}
+        flexGrow={1}
+      >
         <Flex width="95%" maxWidth="860px">
           {profileStateValue.currentProfile?.photoURL ? (
             <Image
@@ -48,8 +61,8 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
               borderRadius="50%"
             />
           )}
-          <Flex padding="10px 16px">
-            <Flex direction="column" mr={6}>
+          <Flex padding="10px 16px" direction={{ base: "column", md: "row" }}>
+            <Flex direction="column" mr={6} mb="12px">
               <Text fontWeight={800} fontSize="16pt">
                 {profileData.displayName}
               </Text>
@@ -63,6 +76,7 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
                 height="30px"
                 pr={6}
                 pl={6}
+                maxWidth="100px"
                 isLoading={loading}
                 onClick={() =>
                   onFollowOrUnfollowProfile(profileData, isFollowed)

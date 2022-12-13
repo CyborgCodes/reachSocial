@@ -1,4 +1,11 @@
-import { Box, Flex, Icon, MenuItem, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Icon,
+  MenuItem,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { GiFireBottle } from "react-icons/gi";
 import { GrAdd } from "react-icons/gr";
@@ -24,7 +31,7 @@ const Communities: React.FC<CommunitiesProps> = () => {
       <MenuItem
         width="100%"
         fontSize="10pt"
-        _hover={{ bg: "gray.100" }}
+        _hover={{ bg: useColorModeValue("gray.200", "gray.500") }}
         onClick={() => setOpen(true)}
       >
         <Flex align="center">

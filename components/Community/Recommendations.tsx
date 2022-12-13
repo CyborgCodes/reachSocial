@@ -8,6 +8,7 @@ import {
   SkeletonCircle,
   Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { GiFireBottle } from "react-icons/gi";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
@@ -56,11 +57,11 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
   return (
     <Flex
       direction="column"
-      bg="white"
+      bg={useColorModeValue("white", "gray.900")}
       borderRadius={4}
       cursor="pointer"
       border="1px solid"
-      borderColor="gray.300"
+      borderColor={useColorModeValue("gray.300", "gray.600")}
     >
       <Flex
         align="flex-end"
@@ -106,7 +107,7 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
                     align="center"
                     fontSize="10pt"
                     borderBottom="1px solid"
-                    borderColor="gray.200"
+                    borderColor={useColorModeValue("gray.200", "gray.700")}
                     p="10px 12px"
                     fontWeight={600}
                   >

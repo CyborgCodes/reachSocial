@@ -5,6 +5,7 @@ import {
   SkeletonText,
   Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 import {
@@ -153,7 +154,11 @@ const Comments: React.FC<CommentsProps> = ({
   }, [selectedPost]);
 
   return (
-    <Box bg="white" borderRadius="0px 0px 4px 4px" p={2}>
+    <Box
+      bg={useColorModeValue("white", "gray.900")}
+      borderRadius="0px 0px 4px 4px"
+      p={2}
+    >
       <Flex
         direction="column"
         pl={10}
@@ -177,7 +182,11 @@ const Comments: React.FC<CommentsProps> = ({
         {fetchLoading ? (
           <>
             {[0, 1, 2].map((item) => (
-              <Box key={item} padding="6" bg="white">
+              <Box
+                key={item}
+                padding="6"
+                bg={useColorModeValue("white", "gray.800")}
+              >
                 <SkeletonCircle size="10" />
                 <SkeletonText mt="4" noOfLines={4} spacing="4" />
               </Box>

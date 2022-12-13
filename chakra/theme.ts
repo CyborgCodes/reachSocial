@@ -1,33 +1,40 @@
-import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
+import {
+  extendTheme,
+  useColorModeValue,
+  type ThemeConfig,
+} from "@chakra-ui/react";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/400.css";
 import "@fontsource/open-sans/700.css";
 import { Button } from "./button";
+
+const config: ThemeConfig = {
+  initialColorMode: "system",
+  useSystemColorMode: false,
+};
 
 export const theme = extendTheme({
   colors: {
     brand: {
       100: "#276749",
     },
+    config,
   },
   fonts: {
     body: "Open Sans, sans-serif",
+    config,
   },
   styles: {
     global: () => ({
       body: {
-        bg: "gray.200",
+        bg: useColorModeValue("gray.200", "gray.800"),
       },
     }),
   },
   components: {
     Button,
+    config,
   },
 });
-
-const config: ThemeConfig = {
-  initialColorMode: "light",
-  useSystemColorMode: false,
-};
 
 export default theme;

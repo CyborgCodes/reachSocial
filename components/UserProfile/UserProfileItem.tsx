@@ -8,6 +8,7 @@ import {
   Spinner,
   Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { GiFireBottle } from "react-icons/gi";
 import { doc, updateDoc } from "firebase/firestore";
@@ -78,12 +79,14 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
   return (
     <Flex
       direction="column"
-      bg="white"
+      bg={useColorModeValue("white", "gray.900")}
       borderRadius={4}
       cursor="pointer"
       border="1px solid"
-      borderColor="gray.300"
+      borderColor={useColorModeValue("gray.300", "gray.700")}
       position="sticky"
+      top="60px"
+      mb={4}
     >
       <Flex
         align="center"

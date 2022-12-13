@@ -1,4 +1,10 @@
-import { Flex, MenuItem, Image, Icon } from "@chakra-ui/react";
+import {
+  Flex,
+  MenuItem,
+  Image,
+  Icon,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 import { IconType } from "react-icons";
 import { GiFireBottle } from "react-icons/gi";
@@ -24,7 +30,7 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
     <MenuItem
       width="100%"
       fontSize="10pt"
-      _hover={{ bg: "gray.100" }}
+      _hover={{ bg: useColorModeValue("gray.100", "gray.500") }}
       onClick={() =>
         onSelectMenuItem({ displayText, link, icon, iconColor, imageURL })
       }

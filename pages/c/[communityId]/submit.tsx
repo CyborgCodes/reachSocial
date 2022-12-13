@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilValue } from "recoil";
@@ -17,7 +17,11 @@ const SubmitPostPage: React.FC = () => {
   return (
     <PageContent>
       <>
-        <Box p="14px 0px" borderBottom="1px solid" borderColor="white">
+        <Box
+          p="14px 0px"
+          borderBottom="1px solid"
+          borderColor={useColorModeValue("white", "gray.500")}
+        >
           <Text>Create a post</Text>
         </Box>
         {user && <NewPostForm user={user} />}

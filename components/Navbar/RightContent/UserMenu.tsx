@@ -39,6 +39,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, profileData }) => {
     await signOut(auth);
     resetCommunityState();
     resetProfileState();
+    router.push(`/`);
     //clear community state and profile state
   };
 

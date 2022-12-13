@@ -11,6 +11,7 @@ import {
   Spinner,
   Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
@@ -90,7 +91,7 @@ const About: React.FC<AboutProps> = ({
   };
 
   return (
-    <Box pt={pt} position="sticky" top="14px">
+    <Box pt={pt} position="sticky" top="60px" mb={4}>
       <Flex
         justify="space-between"
         align="center"
@@ -103,7 +104,12 @@ const About: React.FC<AboutProps> = ({
           About Community
         </Text>
       </Flex>
-      <Flex direction="column" p={3} bg="white" borderRadius="0px 0px 4px 4px">
+      <Flex
+        direction="column"
+        p={3}
+        bg={useColorModeValue("white", "gray.900")}
+        borderRadius="0px 0px 4px 4px"
+      >
         {loading ? (
           <Stack mt={2}>
             <SkeletonCircle size="10" />
@@ -115,10 +121,12 @@ const About: React.FC<AboutProps> = ({
         ) : (
           <>
             <Box
-              bg="gray.100"
+              bg={useColorModeValue("gray.100", "gray.700")}
               width="100%"
               p={2}
               borderRadius={4}
+              maxHeight={{ base: "160px", md: "unset" }}
+              overflowY="auto"
               border="1px solid"
               borderColor="gray.300"
               cursor="pointer"
@@ -129,8 +137,8 @@ const About: React.FC<AboutProps> = ({
               <Text
                 fontSize="9pt"
                 fontWeight={700}
-                color="gray.600"
-                maxWidth="270px"
+                color={useColorModeValue("gray.600", "gray.300")}
+                maxWidth={{ base: "unset", md: "270px" }}
               >
                 {communityData.description}
               </Text>
@@ -140,9 +148,8 @@ const About: React.FC<AboutProps> = ({
               <Flex width="100%" p={2} fontWeight={600} fontSize="10pt">
                 <Flex direction="column" flexGrow={1}>
                   <Text>
-                    {communityData?.numberOfMembers?.toLocaleString()}
+                    {communityData?.numberOfMembers?.toLocaleString()} Members
                   </Text>
-                  <Text>Members</Text>
                 </Flex>
               </Flex>
               <Divider />

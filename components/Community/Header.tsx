@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 import { GiFireBottle } from "react-icons/gi";
 import { Community } from "../../atoms/communitiesAtom";
@@ -17,9 +25,14 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
   ); //read from our communitySnippets
 
   return (
-    <Flex direction="column" width="100%" height="146px">
+    <Flex direction="column" width="100%" height="180px">
       <Box height="50%" bg="green.600" />
-      <Flex justify="center" bg="white" flexGrow={1}>
+      <Flex
+        justify="center"
+        bg={useColorModeValue("white", "gray.900")}
+        boxShadow={useColorModeValue("xl", "dark-lg")}
+        flexGrow={1}
+      >
         <Flex width="95%" maxWidth="860px">
           {communityStateValue.currentCommunity?.imageURL ? (
             <Image
@@ -44,8 +57,8 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
               borderRadius="50%"
             />
           )}
-          <Flex padding="10px 16px">
-            <Flex direction="column" mr={6}>
+          <Flex padding="10px 16px" direction={{ base: "column", md: "row" }}>
+            <Flex direction="column" mr={6} mb="12px">
               <Text fontWeight={800} fontSize="16pt">
                 {communityData.id}
               </Text>
@@ -56,6 +69,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
             <Button
               variant={isJoined ? "outline" : "solid"}
               height="30px"
+              maxWidth="100px"
               pr={6}
               pl={6}
               isLoading={loading}
