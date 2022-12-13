@@ -53,7 +53,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
       </Box>
       <Stack spacing={1}>
         <Stack direction="row" align="center" fontSize="8pt">
-          <Text fontSize="8pt">By</Text>
+          <Text fontSize="8pt" cursor="context-menu">
+            By
+          </Text>
           <Text
             fontSize="8pt"
             color="blue.500"
@@ -67,7 +69,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
           </Text>
           {loadingDelete && <Spinner size="sm" />}
         </Stack>
-        <Text fontSize="10pt">{comment.text}</Text>
+        <Text fontSize="10pt" cursor="context-menu">
+          {comment.text}
+        </Text>
         <Stack
           direction="row"
           align="center"
@@ -88,7 +92,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
               onClick={() => setIsOpen(true)}
             />
           )}
-          <Text fontSize="9pt" align="center">
+          <Text fontSize="9pt" align="center" cursor="context-menu">
             Replies
           </Text>
           {userId === comment.creatorId && (
@@ -102,7 +106,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
           )}
           {userId === comment.creatorId && (
             <>
-              <Text fontSize="9pt" align="center">
+              <Text fontSize="9pt" align="center" cursor="context-menu">
                 Delete
               </Text>
             </>

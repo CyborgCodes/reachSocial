@@ -125,10 +125,12 @@ const PostItem: React.FC<PostItemProps> = ({
               {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
             </Text>
           </Stack>
-          <Text fontSize="12pt" fontWeight={600}>
+          <Text fontSize="12pt" fontWeight={600} cursor="context-menu">
             {post.title}
           </Text>
-          <Text fontSize="10pt">{post.body}</Text>
+          <Text fontSize="10pt" cursor="context-menu">
+            {post.body}
+          </Text>
           {post.imageURL && (
             <Flex justify="center" align="center" p={2}>
               {loadingImage && (
@@ -136,6 +138,8 @@ const PostItem: React.FC<PostItemProps> = ({
               )}
               <Image
                 src={post.imageURL}
+                onClick={() => window.open(`${post.imageURL}`)}
+                cursor="pointer"
                 maxHeight="460px"
                 alt="Post Image"
                 display={loadingImage ? "none" : "unset"}

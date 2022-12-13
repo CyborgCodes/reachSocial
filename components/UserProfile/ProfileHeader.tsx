@@ -63,10 +63,15 @@ const ProfileHeader: React.FC<profileHeaderProps> = ({ profileData }) => {
           )}
           <Flex padding="10px 16px" direction={{ base: "column", md: "row" }}>
             <Flex direction="column" mr={6} mb="12px">
-              <Text fontWeight={800} fontSize="16pt">
+              <Text fontWeight={800} fontSize="16pt" cursor="context-menu">
                 {profileData.displayName}
               </Text>
-              <Text fontWeight={600} fontSize="10pt" color="gray.400">
+              <Text
+                fontWeight={600}
+                fontSize="10pt"
+                color="gray.400"
+                cursor="context-menu"
+              >
                 @{profileData.displayName}
               </Text>
             </Flex>

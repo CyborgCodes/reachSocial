@@ -21,7 +21,6 @@ const PersonalHome: React.FC = () => {
       direction="column"
       bg={useColorModeValue("white", "gray.900")}
       borderRadius={4}
-      cursor="pointer"
       border="1px solid"
       mb={4}
       borderColor={useColorModeValue("gray.300", "gray.700")}
@@ -46,10 +45,12 @@ const PersonalHome: React.FC = () => {
             color={useColorModeValue("green.300", "gray.300")}
             mr={2}
           />
-          <Text fontWeight={600}>Home</Text>
+          <Text fontWeight={600} cursor="context-menu">
+            Home
+          </Text>
         </Flex>
         <Stack spacing={3}>
-          <Text fontSize="9pt" maxWidth="270px">
+          <Text fontSize="9pt" maxWidth="270px" cursor="context-menu">
             Welcome to Reach, a social media platform to dicuss about games with
             communities!
           </Text>

@@ -69,7 +69,7 @@ const MyPosts: React.FC<MyPostsProps> = ({ post, profileData }) => {
         borderColor={useColorModeValue("gray.300", "gray.700")}
         mb={4}
       >
-        <Text>My Posts</Text>
+        <Text cursor="context-menu">My Posts</Text>
       </Flex>
       {loading ? (
         <PostLoader />

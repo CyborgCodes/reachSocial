@@ -95,7 +95,7 @@ const About: React.FC<AboutProps> = ({
   };
 
   return (
-    <Box pt={pt} position="sticky" top="60px" mb={4}>
+    <Box pt={pt} position="sticky" top="60px" mb={4} cursor="context-menu">
       <Flex
         justify="space-between"
         align="center"
@@ -133,7 +133,7 @@ const About: React.FC<AboutProps> = ({
               overflowY="auto"
               border="1px solid"
               borderColor="gray.300"
-              cursor="pointer"
+              cursor="context-menu"
             >
               <Text fontSize="10pt" fontWeight={800} mb={1}>
                 Community description

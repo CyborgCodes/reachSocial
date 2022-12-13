@@ -198,7 +198,7 @@ const Comments: React.FC<CommentsProps> = ({
                 borderColor="gray.100"
                 p={20}
               >
-                <Text fontWeight={700} opacity={0.3}>
+                <Text fontWeight={700} opacity={0.3} cursor="context-menu">
                   No Comments Yet
                 </Text>
               </Flex>

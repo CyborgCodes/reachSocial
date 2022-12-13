@@ -20,9 +20,9 @@ import { auth, firestore } from "../../firebase/clientApp";
 import useCommunityData from "../../src/hooks/useCommunityData";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-type RecommendationsProps = {};
+type FollowingProps = {};
 
-const Recommendations: React.FC<RecommendationsProps> = () => {
+const Following: React.FC<FollowingProps> = () => {
   const [communities, setCommunities] = useState<Community[]>([]);
   const [loading, setLoading] = useState(false);
   const [user] = useAuthState(auth);
@@ -80,7 +80,7 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
         bgImage="url(/images/recCommsArt.png)"
         backgroundSize="cover"
         bgGradient="linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)),
-          url('images/recCommsArt.png')"
+            url('images/recCommsArt.png')"
       >
         Our Communities
       </Flex>
@@ -177,4 +177,4 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
     </Flex>
   );
 };
-export default Recommendations;
+export default Following;

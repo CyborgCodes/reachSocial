@@ -32,10 +32,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
     <Flex direction="column" position="relative">
       {user ? (
         <>
-          <Text mb={1}>
+          <Text mb={1} cursor="context-menu">
             Comment as{" "}
             <span style={{ color: "#3182CE" }}>
-              {user?.email?.split("@")[0]}
+              @{user?.email?.split("@")[0]}
             </span>
           </Text>
           <Textarea

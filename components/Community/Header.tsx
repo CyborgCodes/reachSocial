@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
             />
           )}
           <Flex padding="10px 16px" direction={{ base: "column", md: "row" }}>
-            <Flex direction="column" mr={6} mb="12px">
+            <Flex direction="column" mr={6} mb="12px" cursor="context-menu">
               <Text fontWeight={800} fontSize="16pt">
                 {communityData.id}
               </Text>

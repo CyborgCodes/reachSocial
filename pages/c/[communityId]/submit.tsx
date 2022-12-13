@@ -22,7 +22,7 @@ const SubmitPostPage: React.FC = () => {
           borderBottom="1px solid"
           borderColor={useColorModeValue("white", "gray.500")}
         >
-          <Text>Create a post</Text>
+          <Text cursor="context-menu">Create a Post 🔥</Text>
         </Box>
         {user && <NewPostForm user={user} />}
       </>

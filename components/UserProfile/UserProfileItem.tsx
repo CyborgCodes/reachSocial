@@ -81,12 +81,12 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
       direction="column"
       bg={useColorModeValue("white", "gray.900")}
       borderRadius={4}
-      cursor="pointer"
       border="1px solid"
       borderColor={useColorModeValue("gray.300", "gray.700")}
       position="sticky"
       top="60px"
       mb={4}
+      cursor="context-menu"
     >
       <Flex
         align="center"
@@ -152,7 +152,12 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
                 (imageLoading ? (
                   <Spinner />
                 ) : (
-                  <Text cursor="pointer" onClick={updateImage}>
+                  <Text
+                    cursor="pointer"
+                    onClick={updateImage}
+                    color="blue.500"
+                    _hover={{ textDecoration: "underline" }}
+                  >
                     Save Changes
                   </Text>
                 ))}
