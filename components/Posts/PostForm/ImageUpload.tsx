@@ -21,6 +21,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   setSelectedFile,
 }) => {
   const selectedFileRef = useRef<HTMLInputElement>(null);
+  const borderColor1 = useColorModeValue("gray.200", "gray.600");
 
   return (
     <Flex direction="column" justify="center" align="center" width="100%">
@@ -46,7 +47,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           align="center"
           p={20}
           border="1px dashed"
-          borderColor={useColorModeValue("gray.200", "gray.600")}
+          borderColor={borderColor1}
           width="100%"
           borderRadius={4}
         >

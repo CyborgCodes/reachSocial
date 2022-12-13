@@ -13,6 +13,9 @@ const TabItem: React.FC<TabItemProps> = ({
   selected,
   setSelectedTab,
 }) => {
+  const bgColor1 = useColorModeValue("gray.50", "gray.700");
+  const borderColor1 = useColorModeValue("gray.200", "gray.700");
+  const borderColor2 = useColorModeValue("gray.200", "gray.800");
   return (
     <Flex
       justify="center"
@@ -21,13 +24,11 @@ const TabItem: React.FC<TabItemProps> = ({
       p="14px 0px"
       cursor="pointer"
       fontWeight={700}
-      _hover={{ bg: useColorModeValue("gray.50", "gray.700") }}
+      _hover={{ bg: bgColor1 }}
       color={selected ? "blue.500" : "gray.500"}
       borderWidth={selected ? "0px 1px 2px 0px" : "0px 1px 1px 0px"}
-      borderBottomColor={
-        selected ? "blue.500" : useColorModeValue("gray.200", "gray.700")
-      }
-      borderRightColor={useColorModeValue("gray.200", "gray.800")}
+      borderBottomColor={selected ? "blue.500" : borderColor1}
+      borderRightColor={borderColor2}
       onClick={() => setSelectedTab(item.title)}
     >
       <Flex align="center" height="20px" mr={2}>

@@ -50,6 +50,9 @@ const Comments: React.FC<CommentsProps> = ({
   const setPostState = useSetRecoilState(postState);
   const TITLE = "Reach Social Media";
 
+  const bgColor1 = useColorModeValue("white", "gray.900");
+  const bgColor2 = useColorModeValue("white", "gray.800");
+
   const onCreateComment = async (commentText: string) => {
     setCreateLoading(true);
     try {
@@ -154,11 +157,7 @@ const Comments: React.FC<CommentsProps> = ({
   }, [selectedPost]);
 
   return (
-    <Box
-      bg={useColorModeValue("white", "gray.900")}
-      borderRadius="0px 0px 4px 4px"
-      p={2}
-    >
+    <Box bg={bgColor1} borderRadius="0px 0px 4px 4px" p={2}>
       <Flex
         direction="column"
         pl={10}
@@ -182,11 +181,7 @@ const Comments: React.FC<CommentsProps> = ({
         {fetchLoading ? (
           <>
             {[0, 1, 2].map((item) => (
-              <Box
-                key={item}
-                padding="6"
-                bg={useColorModeValue("white", "gray.800")}
-              >
+              <Box key={item} padding="6" bg={bgColor2}>
                 <SkeletonCircle size="10" />
                 <SkeletonText mt="4" noOfLines={4} spacing="4" />
               </Box>

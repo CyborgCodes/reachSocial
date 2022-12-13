@@ -28,6 +28,10 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
   const [user] = useAuthState(auth);
   const { communityStateValue, onJoinOrLeaveCommunity } = useCommunityData();
 
+  const bgColor1 = useColorModeValue("white", "gray.900");
+  const borderColor1 = useColorModeValue("gray.300", "gray.600");
+  const borderColor2 = useColorModeValue("gray.300", "gray.600");
+
   const getCommunityRecommendations = async () => {
     setLoading(true);
     try {
@@ -57,11 +61,11 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
   return (
     <Flex
       direction="column"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={bgColor1}
       borderRadius={4}
       cursor="pointer"
       border="1px solid"
-      borderColor={useColorModeValue("gray.300", "gray.600")}
+      borderColor={borderColor1}
     >
       <Flex
         align="flex-end"
@@ -107,7 +111,7 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
                     align="center"
                     fontSize="10pt"
                     borderBottom="1px solid"
-                    borderColor={useColorModeValue("gray.200", "gray.700")}
+                    borderColor={borderColor2}
                     p="10px 12px"
                     fontWeight={600}
                   >

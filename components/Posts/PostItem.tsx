@@ -56,6 +56,10 @@ const PostItem: React.FC<PostItemProps> = ({
 
   const [error, setError] = useState(false);
 
+  const bgColor1 = useColorModeValue("white", "gray.900");
+  const borderColor1 = useColorModeValue("white", "gray.700");
+  const borderColor2 = useColorModeValue("gray.300", "gray.700");
+
   const handleDelete = async (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -92,12 +96,8 @@ const PostItem: React.FC<PostItemProps> = ({
   return (
     <Flex
       border="1px solid"
-      bg={useColorModeValue("white", "gray.900")}
-      borderColor={
-        singlePostPage
-          ? useColorModeValue("white", "gray.700")
-          : useColorModeValue("gray.300", "gray.700")
-      }
+      bg={bgColor1}
+      borderColor={singlePostPage ? borderColor1 : borderColor2}
       borderRadius={singlePostPage ? "4px 4px 0px 0px" : "4px"}
       _hover={{ borderColor: singlePostPage ? "none" : "gray.500" }}
       cursor={singlePostPage ? "unset" : "pointer"}

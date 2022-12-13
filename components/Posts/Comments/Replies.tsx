@@ -47,6 +47,10 @@ const Replies: React.FC<RepliesProps> = ({
   const [loadingDeleteId, setLoadingDeleteId] = useState("");
   const setPostState = useSetRecoilState(postState);
 
+  const bgColor1 = useColorModeValue("white", "gray.900");
+  const bgColor2 = useColorModeValue("white", "gray.800");
+  const bgColor3 = useColorModeValue("gray.100", "gray.300");
+
   const onCreateReply = async (replyText: string) => {
     setCreateLoading(true);
     try {
@@ -148,20 +152,12 @@ const Replies: React.FC<RepliesProps> = ({
   }, [selectedPost]);
 
   return (
-    <Box
-      bg={useColorModeValue("white", "gray.900")}
-      borderRadius="0px 0px 4px 4px"
-      p={2}
-    >
+    <Box bg={bgColor1} borderRadius="0px 0px 4px 4px" p={2}>
       <Stack spacing={6} p={2}>
         {fetchLoading ? (
           <>
             {[0].map((item) => (
-              <Box
-                key={item}
-                padding="6"
-                bg={useColorModeValue("white", "gray.800")}
-              >
+              <Box key={item} padding="6" bg={bgColor2}>
                 <SkeletonCircle size="10" />
                 <SkeletonText mt="4" noOfLines={4} spacing="4" />
               </Box>
@@ -175,7 +171,7 @@ const Replies: React.FC<RepliesProps> = ({
                 justify="center"
                 align="center"
                 height="50px"
-                borderColor={useColorModeValue("gray.100", "gray.300")}
+                borderColor={bgColor3}
                 p={20}
               >
                 <Text fontWeight={700} opacity={0.3}>
