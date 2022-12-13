@@ -9,7 +9,7 @@ import "@fontsource/open-sans/700.css";
 import { Button } from "./button";
 
 const config: ThemeConfig = {
-  initialColorMode: "system",
+  initialColorMode: "dark",
   useSystemColorMode: false,
 };
 
