@@ -116,9 +116,6 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
                   p="10px 12px"
                   fontWeight={600}
                   cursor="auto"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                  }}
                 >
                   <Flex width="80%" align="center">
                     <Flex width="15%" cursor="context-menu">
