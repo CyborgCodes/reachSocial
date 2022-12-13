@@ -44,6 +44,10 @@ const About: React.FC<AboutProps> = ({
   const selectFileRef = useRef<HTMLInputElement>(null);
   const setCommunityStateValue = useSetRecoilState(communityState);
 
+  const textColor1 = useColorModeValue("gray.600", "gray.300");
+  const bgColor1 = useColorModeValue("white", "gray.900");
+  const bgColor2 = useColorModeValue("gray.100", "gray.700");
+
   // April 24 - moved this logic to custom hook in tutorial build (useSelectFile)
   const [selectedFile, setSelectedFile] = useState<string>();
 
@@ -107,7 +111,7 @@ const About: React.FC<AboutProps> = ({
       <Flex
         direction="column"
         p={3}
-        bg={useColorModeValue("white", "gray.900")}
+        bg={bgColor1}
         borderRadius="0px 0px 4px 4px"
       >
         {loading ? (
@@ -121,7 +125,7 @@ const About: React.FC<AboutProps> = ({
         ) : (
           <>
             <Box
-              bg={useColorModeValue("gray.100", "gray.700")}
+              bg={bgColor2}
               width="100%"
               p={2}
               borderRadius={4}
@@ -137,7 +141,7 @@ const About: React.FC<AboutProps> = ({
               <Text
                 fontSize="9pt"
                 fontWeight={700}
-                color={useColorModeValue("gray.600", "gray.300")}
+                color={textColor1}
                 maxWidth={{ base: "unset", md: "270px" }}
               >
                 {communityData.description}
