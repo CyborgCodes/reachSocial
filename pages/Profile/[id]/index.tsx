@@ -21,6 +21,7 @@ type ProfileProps = {
 const Profile: React.FC<ProfileProps> = ({ post, profileData, loading }) => {
   console.log("here is the data", profileData);
   const setProfileStateValue = useSetRecoilState(profileState);
+  const TITLE = "Reach Social Media";
 
   useEffect(() => {
     setProfileStateValue((prev) => ({
@@ -35,6 +36,7 @@ const Profile: React.FC<ProfileProps> = ({ post, profileData, loading }) => {
 
   return (
     <>
+      <title>{TITLE}</title>
       <ProfileHeader profileData={profileData} />
       <PageContent>
         <>

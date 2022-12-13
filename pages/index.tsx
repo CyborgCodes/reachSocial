@@ -7,12 +7,13 @@ import Recommendations from "../components/Community/Recommendations";
 import PageContent from "../components/Layout/PageContent";
 import { auth } from "../firebase/clientApp";
 
-<title>Reach Social Media</title>;
 const Home: NextPage = () => {
   const [user] = useAuthState(auth);
+  const TITLE = "Reach Social Media";
   return (
     <PageContent>
       <>
+        <title>{TITLE}</title>
         {user ? (
           <>
             <CreatePostLink />

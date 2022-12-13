@@ -47,6 +47,7 @@ const Comments: React.FC<CommentsProps> = ({
   const [createLoading, setCreateLoading] = useState(false);
   const [loadingDeleteId, setLoadingDeleteId] = useState("");
   const setPostState = useSetRecoilState(postState);
+  const TITLE = "Reach Social Media";
 
   const onCreateComment = async (commentText: string) => {
     setCreateLoading(true);
@@ -161,6 +162,7 @@ const Comments: React.FC<CommentsProps> = ({
         fontSize="10pt"
         width="100%"
       >
+        <title>{TITLE}</title>
         {!fetchLoading && (
           <CommentInput
             commentText={commentText}

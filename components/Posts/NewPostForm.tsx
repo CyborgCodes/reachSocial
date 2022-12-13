@@ -50,6 +50,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
   const { selectedFile, setSelectedFile, onSelectFile } = useSelectFile();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const TITLE = "Reach Social Media";
 
   const handleCreatePost = async () => {
     const { communityId } = router.query;
@@ -108,6 +109,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
   return (
     <Flex direction="column" bg="white" borderRadius={4} mt={2}>
       <Flex width="100%">
+        <title>{TITLE}</title>
         {formTabs.map((item) => (
           <TabItem
             key={item.title}

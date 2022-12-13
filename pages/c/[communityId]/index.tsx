@@ -19,6 +19,7 @@ type CommunityPageProps = {
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
   console.log("here is the data", communityData);
   const setCommunityStateValue = useSetRecoilState(communityState);
+  const TITLE = "Reach Social Media";
 
   useEffect(() => {
     setCommunityStateValue((prev) => ({
@@ -32,6 +33,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
   }
   return (
     <>
+      <title>{TITLE}</title>
       <Header communityData={communityData} />
       <PageContent>
         <>
