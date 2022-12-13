@@ -24,6 +24,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
   createLoading,
   onCreateComment,
 }) => {
+  const bgColor1 = useColorModeValue("white", "gray.800");
+  const textColor1 = useColorModeValue("black", "white");
+  const bgColor2 = useColorModeValue("gray.100", "gray.800");
+
   return (
     <Flex direction="column" position="relative">
       {user ? (
@@ -45,8 +49,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
             _placeholder={{ color: "gray.500" }}
             _focus={{
               outline: "none",
-              bg: useColorModeValue("white", "gray.800"),
-              color: useColorModeValue("black", "white"),
+              bg: bgColor1,
+              color: textColor1,
               border: "1px solid black",
             }}
           />
@@ -56,7 +60,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             right={0.1}
             bottom="1px"
             justify="flex-end"
-            bg={useColorModeValue("gray.100", "gray.800")}
+            bg={bgColor2}
             p="6px 8px"
             borderRadius="0px 0px 4px 4px"
           >
