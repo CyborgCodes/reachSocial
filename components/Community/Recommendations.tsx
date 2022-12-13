@@ -139,7 +139,7 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
                       )}
                       <Flex _hover={{ color: textColor1 }}>
                         <Link
-                          key={item.id}
+                          // key={item.id}
                           href={`/c/${item.id}`}
                           style={{
                             whiteSpace: "nowrap",
