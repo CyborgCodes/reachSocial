@@ -16,6 +16,7 @@ import Communities from "./Communities";
 
 const UserMenu: React.FC = () => {
   const { directoryState, toggleMenuOpen } = useDirectory();
+  const iconColor = useColorModeValue("black", "white");
 
   return (
     <Menu isOpen={directoryState.isOpen}>
@@ -49,7 +50,7 @@ const UserMenu: React.FC = () => {
                 fontSize={24}
                 mr={{ base: 1, md: 2 }}
                 as={GiFireBottle}
-                color={directoryState.selectedMenuItem.iconColor}
+                color={iconColor}
               />
             )}
             <Flex display={{ base: "none", lg: "flex" }}>
