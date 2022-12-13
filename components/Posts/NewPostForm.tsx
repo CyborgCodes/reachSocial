@@ -30,7 +30,7 @@ const formTabs: TabItem[] = [
     icon: IoDocumentText,
   },
   {
-    title: "Images & Video",
+    title: "Images & GIFs",
     icon: IoImageOutline,
   },
 ];
