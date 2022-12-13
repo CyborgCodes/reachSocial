@@ -108,6 +108,7 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
               );
               return (
                 <Flex
+                  key={item.id}
                   position="relative"
                   align="center"
                   fontSize="10pt"
@@ -139,7 +140,6 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
                       )}
                       <Flex _hover={{ color: textColor1 }}>
                         <Link
-                          // key={item.id}
                           href={`/c/${item.id}`}
                           style={{
                             whiteSpace: "nowrap",
