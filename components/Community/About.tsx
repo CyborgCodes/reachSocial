@@ -200,6 +200,7 @@ const About: React.FC<AboutProps> = ({
                         <Image
                           borderRadius="full"
                           boxSize="40px"
+                          objectFit="cover"
                           src={selectedFile || communityData?.imageURL}
                           alt="Dan Abramov"
                         />

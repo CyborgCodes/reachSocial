@@ -43,6 +43,7 @@ const UserMenu: React.FC = () => {
                 src={directoryState.selectedMenuItem.imageURL}
                 borderRadius="full"
                 boxSize="24px"
+                objectFit="cover"
                 mr={2}
               />
             ) : (

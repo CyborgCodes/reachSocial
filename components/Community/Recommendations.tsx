@@ -127,6 +127,7 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
                         <Image
                           borderRadius="full"
                           boxSize="28px"
+                          objectFit="cover"
                           src={item.imageURL}
                           mr={2}
                         />
