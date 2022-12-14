@@ -25,6 +25,7 @@ const PersonalHome: React.FC = () => {
       mb={4}
       borderColor={useColorModeValue("gray.300", "gray.700")}
       position="sticky"
+      minWidth="270px"
     >
       <Flex
         align="flex-end"

@@ -25,21 +25,29 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
   iconColor,
   imageURL,
 }) => {
+  const bgColor1 = useColorModeValue("gray.100", "gray.500");
+  const iconColor1 = useColorModeValue("black", "white");
   const { onSelectMenuItem } = useDirectory();
   return (
     <MenuItem
       width="100%"
       fontSize="10pt"
-      _hover={{ bg: useColorModeValue("gray.100", "gray.500") }}
+      _hover={{ bg: bgColor1 }}
       onClick={() =>
         onSelectMenuItem({ displayText, link, icon, iconColor, imageURL })
       }
     >
       <Flex align="center">
         {imageURL ? (
-          <Image src={imageURL} borderRadius="full" boxSize="18px" mr={2} />
+          <Image
+            src={imageURL}
+            borderRadius="full"
+            boxSize="18px"
+            mr={2}
+            objectFit="cover"
+          />
         ) : (
-          <Icon as={GiFireBottle} fontSize={20} mr={2} color={iconColor} />
+          <Icon as={GiFireBottle} fontSize={20} mr={2} color={iconColor1} />
         )}
         {displayText}
       </Flex>

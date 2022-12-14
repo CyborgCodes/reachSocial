@@ -46,7 +46,7 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
         id: doc.id,
         ...doc.data(),
       })) as Community[];
-      console.log("HERE ARE COMS", communities);
+      // console.log("HERE ARE COMS", communities);
 
       setCommunities(communities);
     } catch (error: any) {
@@ -77,10 +77,9 @@ const Recommendations: React.FC<RecommendationsProps> = () => {
         borderRadius="4px 4px 0px 0px"
         cursor="context-menu"
         fontWeight={600}
-        bgImage="url(/images/recCommsArt.png)"
+        // bgImage="url(/images/recCommsArt.png)"
         backgroundSize="cover"
-        bgGradient="linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)),
-          url('images/recCommsArt.png')"
+        bgGradient="linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75))"
       >
         Our Communities
       </Flex>

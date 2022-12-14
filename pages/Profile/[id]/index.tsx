@@ -19,7 +19,7 @@ type ProfileProps = {
 };
 
 const Profile: React.FC<ProfileProps> = ({ post, profileData, loading }) => {
-  console.log("here is the data", profileData);
+  // console.log("here is the data", profileData);
   const setProfileStateValue = useSetRecoilState(profileState);
   const TITLE = "Reach Social Media";
 

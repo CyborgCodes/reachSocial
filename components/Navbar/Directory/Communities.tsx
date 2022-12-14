@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { GiFireBottle } from "react-icons/gi";
-import { GrAdd } from "react-icons/gr";
+import { AiOutlinePlus } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
 import { communityState } from "../../../atoms/communitiesAtom";
 import CreateCommunityModal from "../../../CreateCommunity/CreateCommunityModal";
@@ -19,6 +19,8 @@ type CommunitiesProps = {};
 const Communities: React.FC<CommunitiesProps> = () => {
   const [open, setOpen] = useState(false);
   const mySnippets = useRecoilValue(communityState).mySnippets;
+  const iconColor1 = useColorModeValue("black", "white");
+  const bgColor1 = useColorModeValue("green.400", "green.600");
 
   return (
     <>
@@ -38,11 +40,11 @@ const Communities: React.FC<CommunitiesProps> = () => {
       <MenuItem
         width="100%"
         fontSize="10pt"
-        _hover={{ bg: useColorModeValue("gray.200", "gray.500") }}
+        _hover={{ bg: bgColor1 }}
         onClick={() => setOpen(true)}
       >
         <Flex align="center">
-          <Icon fontSize={20} mr={2} as={GrAdd} />
+          <Icon fontSize={20} mr={2} as={AiOutlinePlus} color={iconColor1} />
           Create Community
         </Flex>
       </MenuItem>

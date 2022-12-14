@@ -45,8 +45,6 @@ const MyPosts: React.FC<MyPostsProps> = ({ post, profileData }) => {
         ...prev,
         posts: posts as Post[],
       }));
-
-      console.log("posts", posts);
     } catch (error: any) {
       console.log("getPosts error", error.message);
     }

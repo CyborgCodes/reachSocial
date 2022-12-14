@@ -54,7 +54,7 @@ const useProfileData = () => {
         ...prev,
         mySnippets: snippets as ProfileSnippet[],
       }));
-      console.log("here are my profile snippets", snippets);
+      // console.log("here are my profile snippets", snippets);
     } catch (error: any) {
       console.log("getMySnippets error", error);
       setError(error.message);

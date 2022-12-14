@@ -58,7 +58,7 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
       await updateDoc(doc(firestore, "users", profileData.id), {
         photoURL: profileImgURL,
       });
-      console.log("HERE IS THE PROFILE PIC URL", profileImgURL);
+      // console.log("HERE IS THE PROFILE PIC URL", profileImgURL);
 
       setProfileStateValue((prev) => ({
         ...prev,
