@@ -56,13 +56,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, profileData }) => {
           <Flex align="center">
             {user ? (
               <>
-                {profileStateValue?.currentProfile?.photoURL ? (
+                {user?.photoURL ? (
                   <Image
                     borderRadius="full"
                     objectFit="cover"
                     boxSize="24px"
                     mr="2"
-                    src={profileStateValue?.currentProfile?.photoURL}
+                    src={user?.photoURL}
                   />
                 ) : (
                   <Icon fontSize={24} mr={2} color="gray.300" as={VscAccount} />
