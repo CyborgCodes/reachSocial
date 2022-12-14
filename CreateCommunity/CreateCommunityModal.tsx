@@ -140,12 +140,7 @@ const CreateCommunity: React.FC<CreateCommunityProps> = ({
               <Text fontSize={11} color="gray.500">
                 Community names including capitalization cannot be changed
               </Text>
-              <Text
-                fontSize={11}
-                color="red.500"
-                fontWeight={700}
-                noOfLines={[1, 2, 3]}
-              >
+              <Text fontSize={11} color="red.500" fontWeight={700}>
                 Note! <br />
                 Communities should be related to games. Communities that
                 <br />

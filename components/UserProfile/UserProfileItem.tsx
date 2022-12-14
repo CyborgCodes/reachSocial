@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Divider,
   Flex,
@@ -10,17 +9,15 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { GiFireBottle } from "react-icons/gi";
 import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { GiFireBottle } from "react-icons/gi";
 import { useSetRecoilState } from "recoil";
 import { Profile, profileState } from "../../atoms/profileAtom";
 import { auth, firestore, storage } from "../../firebase/clientApp";
 import useDirectory from "../../src/hooks/useDirectory";
-import useProfileData from "../../src/hooks/useProfileData";
-import { updateProfile } from "firebase/auth";
 
 type userProfileItemProps = {
   loading?: boolean;
@@ -104,9 +101,8 @@ const UserProfileItem: React.FC<userProfileItemProps> = ({
         <Flex width="100%" p={2} fontWeight={600} fontSize="10pt">
           <Flex direction="row" flexGrow={1}>
             <Text mr={2}>
-              {profileData?.numberOfFollowers?.toLocaleString()}
+              {profileData?.numberOfFollowers?.toLocaleString()} Followers
             </Text>
-            <Text>Followers</Text>
           </Flex>
         </Flex>
         <Divider mb={3} />
